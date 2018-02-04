@@ -1,7 +1,7 @@
-## HCMIU-2048-Special-Edition
+# HCMIU-2048-Special-Edition
 Data Structure and Algorithms game project!
 
-# Dev
+## Dev
   * Nguyễn Thanh Xuân Tùng
     * https://www.facebook.com/ntxt98
     * xuantung.1998@gmail.com
@@ -15,6 +15,6 @@ Data Structure and Algorithms game project!
     * https://www.facebook.com/profile.php?id=100006625245262
     * phien.hoangnguyen@gmail.com
 
-# Info
+## Info
 School of Computer Science & Engineering
 > International University - Vietnam National University - Ho Chi Minh City.
