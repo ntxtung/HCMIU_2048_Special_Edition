@@ -1,4 +1,4 @@
-package DSA2048;
+package dsa2048;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package DSA2048;
+package dsa2048;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
