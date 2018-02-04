@@ -18,13 +18,13 @@ public class Main extends Application {
 			//scene.getStylesheets().add(getClass().getResource("UI.css").toExternalForm());
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setScene(scene);
+
+			primaryStage.show();
 			
 			// Set window to screeen center
 			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 			primaryStage.setX((screenBounds.getWidth() - primaryStage.getWidth())/2);
 			primaryStage.setY((screenBounds.getHeight() - primaryStage.getHeight())/2);
-
-			primaryStage.show();
 
 		} catch(Exception e) {
 			e.printStackTrace();
