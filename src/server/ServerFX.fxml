@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="scene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerFXController">
+   <top>
+      <HBox prefHeight="50.0" prefWidth="636.0" BorderPane.alignment="CENTER" />
+   </top>
+   <right>
+      <AnchorPane prefHeight="440.0" prefWidth="226.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="User online:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="progressUser" layoutX="18.0" layoutY="34.0" mouseTransparent="true" prefHeight="20.0" prefWidth="180.0" progress="0.34" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" />
+            <Label layoutX="14.0" layoutY="66.0" text="Room:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="progressRoom" layoutX="18.0" layoutY="86.0" prefHeight="20.0" prefWidth="180.0" progress="0.14" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" />
+            <Label layoutX="14.0" layoutY="134.0" text="CPU usage:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="progressCPU" layoutX="18.0" layoutY="155.0" prefHeight="20.0" prefWidth="180.0" progress="0.29" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" />
+            <Label layoutX="14.0" layoutY="186.0" text="RAM usage:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="progressRAM" layoutX="18.0" layoutY="207.0" prefHeight="20.0" prefWidth="180.0" progress="0.66" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" />
+            <Label fx:id="lblStatusUser" layoutX="162.0" layoutY="14.0" text="0/100" textAlignment="RIGHT" AnchorPane.rightAnchor="24.0" />
+            <Label fx:id="lblStatusRoom" layoutX="162.0" layoutY="66.0" text="0/100" textAlignment="RIGHT" AnchorPane.rightAnchor="24.0" />
+            <Label fx:id="lblStatusCPU" layoutX="162.0" layoutY="134.0" text="0/100" textAlignment="RIGHT" AnchorPane.rightAnchor="24.0" />
+            <Label fx:id="lblStatusRAM" layoutX="162.0" layoutY="186.0" text="0/100" textAlignment="RIGHT" AnchorPane.rightAnchor="24.0" />
+            <Label layoutX="17.0" layoutY="242.0" text="Network usage:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatusNetwork" layoutX="162.0" layoutY="242.0" text="0/100" textAlignment="RIGHT" AnchorPane.rightAnchor="24.0" />
+            <ProgressBar fx:id="progressNetwork" layoutX="18.0" layoutY="263.0" prefHeight="20.0" prefWidth="180.0" progress="0.28" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" />
+            <LineChart layoutX="-8.0" layoutY="294.0" prefHeight="178.0" prefWidth="225.0" title="Busy analysis" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="-8.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="287.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
+      </AnchorPane>
+   </right>
+   <center>
+      <SplitPane dividerPositions="0.8204158790170132" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <SplitPane dividerPositions="0.46218487394957986" prefHeight="430.0" prefWidth="478.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="428.0" prefWidth="183.0">
+                           <children>
+                              <TableView layoutX="8.0" layoutY="60.0" prefHeight="428.0" prefWidth="216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn prefWidth="110.0" text="Username" />
+                                  <TableColumn prefWidth="76.0" text="Ranking" />
+                                    <TableColumn prefWidth="75.0" text="IP" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <TableView layoutX="52.0" layoutY="89.0" prefHeight="428.0" prefWidth="252.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="RoomID" />
+                                  <TableColumn prefWidth="75.0" text="Players" />
+                                    <TableColumn prefWidth="75.0" text="Mode" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
