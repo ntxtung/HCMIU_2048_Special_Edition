@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-3.3.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Sigar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
