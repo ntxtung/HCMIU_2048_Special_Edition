@@ -13,18 +13,21 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("DSA2048.fxml"));
-			Scene scene = new Scene(root);
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Gameplay.fxml"));
+			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+
 			//scene.getStylesheets().add(getClass().getResource("UI.css").toExternalForm());
-			primaryStage.initStyle(StageStyle.TRANSPARENT);
+//			primaryStage.initStyle(StageStyle.TRANSPARENT);
+			primaryStage.setTitle("2048");
 			primaryStage.setScene(scene);
 			
+			primaryStage.setResizable(false);
 			primaryStage.show();
 
-			// Set window to screeen center
-			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-			primaryStage.setX((screenBounds.getWidth() - primaryStage.getWidth())/2);
-			primaryStage.setY((screenBounds.getHeight() - primaryStage.getHeight())/2);
+//			// Set window to screeen center
+//			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+//			primaryStage.setX((screenBounds.getWidth() - primaryStage.getWidth())/2);
+//			primaryStage.setY((screenBounds.getHeight() - primaryStage.getHeight())/2);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
