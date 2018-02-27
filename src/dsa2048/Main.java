@@ -13,10 +13,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Gameplay.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Gameplay.fxml"));
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
-
-			//scene.getStylesheets().add(getClass().getResource("UI.css").toExternalForm());
+			
+			scene.getStylesheets().add(getClass().getResource("css/Gameplay.css").toExternalForm());
 //			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setTitle("2048");
 			primaryStage.setScene(scene);
