@@ -21,6 +21,11 @@
 	-fx-background-radius: 6 6 6 6;
 }
 
+.score{
+	-fx-font: 35px "source Sans Pro";
+	-fx-font-weight: bold;
+}
+
 .txt-score{
 	-fx-fill: #f1e5d9;
 }

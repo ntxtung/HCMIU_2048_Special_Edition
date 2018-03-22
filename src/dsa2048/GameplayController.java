@@ -5,10 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-class Title extends Pane{
-	
-}
-
 public class GameplayController {
 	@FXML
 	private Pane paneMain;
