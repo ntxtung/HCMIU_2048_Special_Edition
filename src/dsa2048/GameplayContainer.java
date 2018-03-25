@@ -2,11 +2,20 @@ package dsa2048;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
 
 class Table {
 	private Integer size;
 	private Integer[][] table;
-
+	
+	public Table clone() {
+		Table cloner = new Table(this.size);
+		for (int i=0; i<size; i++)
+			for (int j=0; j<size; j++)
+				cloner.table[i][j] = this.table[i][j];
+		return cloner;
+	}
+	
 	public Table(int size) {
 		this.size = size;
 		table = new Integer[size][size];
@@ -24,9 +33,100 @@ class Table {
 		}
 	}
 	
+	public void pushUp() {
+		int topRow;
+		for (int y = 0; y < 4; y++) {
+			topRow = 0;
+			for (int x = 0; x < 4; x++) {
+				if (topRow == x || table[x][y] == 0) {
+				} else if (table[x][y] == table[topRow][y]) {
+					table[topRow][y] = table[topRow][y] * 2;
+					table[x][y] = 0;
+					topRow++;
+				} else {
+					if (table[topRow][y] != 0) {
+						topRow++;
+					}
+					if (topRow != x) {
+						table[topRow][y] = table[x][y];
+						table[x][y] = 0;
+					}
+				}
+			}
+		}
+	}
+
+	public void pushDown() {
+		int lastRow;
+		for (int y = 0; y < 4; y++) {
+			lastRow = 3;
+			for (int x = 3; x >= 0; x--) {
+				if (lastRow == x || table[x][y] == 0) {
+					continue;
+				} else if (table[x][y] == table[lastRow][y]) {
+					table[lastRow][y] = table[lastRow][y] * 2;
+					table[x][y] = 0;
+					lastRow--;
+				} else {
+					if (table[lastRow][y] != 0)
+						lastRow--;
+					if (lastRow != x) {
+						table[lastRow][y] = table[x][y];
+						table[x][y] = 0;
+					}
+				}
+			}
+		}
+	}
+
+	public void pushLeft() {
+		int lastleftCol;
+		for (int x = 0; x < 4; x++) {
+			lastleftCol = 0;
+			for (int y = 0; y < 4; y++) {
+				if (lastleftCol == y || table[x][y] == 0) {
+
+				} else if (table[x][y] == table[x][lastleftCol]) {
+					table[x][lastleftCol] = table[x][lastleftCol] * 2;
+					table[x][y] = 0;
+				} else {
+					if (table[x][lastleftCol] != 0)
+						lastleftCol++;
+					if (lastleftCol != y) {
+						table[x][lastleftCol] = table[x][y];
+						table[x][y] = 0;
+					}
+				}
+			}
+		}
+	}
+
+	public void pushRight() {
+		int lastrightcol;
+		for (int x = 0; x < 4; x++) {
+			lastrightcol = 3;
+			for (int y = 3; y >= 0; y--) {
+				if (lastrightcol == y || table[x][y] == 0) {
+
+				} else if (table[x][y] == table[x][lastrightcol]) {
+					table[x][lastrightcol] = table[x][lastrightcol] * 2;
+					table[x][y] = 0;
+				} else {
+					if (table[x][lastrightcol] != 0)
+						lastrightcol--;
+					if (lastrightcol != y) {
+						table[x][lastrightcol] = table[x][y];
+						table[x][y] = 0;
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	public void generateNumber() {
 		Random r = new Random();
 		ArrayList<Integer> emptyspacesX = new ArrayList<Integer>();
@@ -50,216 +150,56 @@ class Table {
 		table[X][Y] = newPopup;
 	}
 
-	/**
-	 * Push table up
-	 * 
-	 */
-	public void pushUp() {
-		ArrayList<Integer> line;
-
-		for (int i = 0; i < this.size; i++) {
-			line = new ArrayList();
-
-			for (int j = 0; j < this.size; j++) {
-				if (table[j][i] > 0)
-					line.add(table[j][i]);
-			}
-
-			for (int j = 0; j < line.size() - 1; j++) {
-				if (line.get(j) == line.get(j + 1)) {
-					line.set(j, line.get(j) * 2);
-					line.remove(j + 1);
-				}
-			}
-
-			for (int j = 0; j < this.size; j++) {
-				if (j < line.size())
-					table[j][i] = line.get(j);
-				else
-					table[j][i] = 0;
-			}
-		}
+	public Integer get(int row, int col) {
+		return table[row][col];
 	}
-
-	/**
-	 * Push table left
-	 * 
-	 */
-	public void pushLeft() {
-		ArrayList<Integer> line;
-
-		for (int i = 0; i < this.size; i++) {
-			line = new ArrayList();
-
-			for (int j = 0; j < this.size; j++) {
-				if (table[i][j] > 0)
-					line.add(table[i][j]);
-			}
-
-			for (int j = 0; j < line.size() - 1; j++) {
-				if (line.get(j) == line.get(j + 1)) {
-					line.set(j, line.get(j) * 2);
-					line.remove(j + 1);
-				}
-			}
-
-			for (int j = 0; j < this.size; j++) {
-				if (j < line.size())
-					table[i][j] = line.get(j);
-				else
-					table[i][j] = 0;
-			}
-		}
-	}
-
-	/**
-	 * Push table down
-	 * 
-	 */
-	public void pushDown() {
-		ArrayList<Integer> line;
-
-		for (int i = 0; i < this.size; i++) {
-			line = new ArrayList();
-
-			for (int j = 0; j < this.size; j++) {
-				if (table[j][i] > 0)
-					line.add(table[j][i]);
-			}
-
-			for (int j = 0; j < line.size() - 1; j++) {
-				if (line.get(j) == line.get(j + 1)) {
-					line.set(j, line.get(j) * 2);
-					line.remove(j + 1);
-				}
-			}
-
-			for (int j = 0; j < this.size; j++) {
-				if (j < line.size())
-					table[this.size - j - 1][i] = line.get(j);
-				else
-					table[this.size - j - 1][i] = 0;
-			}
-		}
-	}
-
-	/**
-	 * Push table right
-	 * 
-	 */
-	public void pushRight() {
-		ArrayList<Integer> line;
-
-		for (int i = 0; i < this.size; i++) {
-			line = new ArrayList();
-
-			for (int j = 0; j < this.size; j++) {
-				if (table[i][j] > 0)
-					line.add(table[i][j]);
-			}
-
-			for (int j = 0; j < line.size() - 1; j++) {
-				if (line.get(j) == line.get(j + 1)) {
-					line.set(j, line.get(j) * 2);
-					line.remove(j + 1);
-				}
-			}
-
-			for (int j = 0; j < this.size; j++) {
-				if (j < line.size())
-					table[i][this.size - j - 1] = line.get(j);
-				else
-					table[i][this.size - j - 1] = 0;
-			}
-		}
-	}
+	
+	public Boolean isOver(){
+        boolean check = true;
+        for (int i=0; i<4;i++)
+            for(int j=0; j<4; j++){
+                if (this.table[i][j]==0)
+                    check = false;
+                if (i!= 3){
+                    if(this.table[i][j]==this.table[i+1][j])
+                        check = false;
+                }
+                if (j!= 3){
+                    if(this.table[i][j]==this.table[i][j+1])
+                        check = false;
+                }
+            }
+        return check;
+    }
 }
 
 public class GameplayContainer {
 	private static Table gameTable = new Table(4);
+	private static Stack<Table> historyTable = new Stack<Table>();
+	
+	public static Table getGameTable() {
+		return gameTable;
+	}
 
 	public static void initialize() {
 		gameTable = new Table(4);
 		gameTable.generateNumber();
 	}
-
-	public static void main(String agrs[]) {
-		gameTable.consoleDisplay();
-
-		System.out.println();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushUp();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		System.out.println();
-		gameTable.pushLeft();
-		gameTable.generateNumber();
-		gameTable.consoleDisplay();
-		
-		
+	
+	public static void pushTable() {
+		historyTable.push(gameTable.clone());
 	}
+	
+	public static void popTable() {
+		historyTable.pop();
+	}
+	
+	public static void undo() {
+		if (!historyTable.isEmpty()) {
+			gameTable = historyTable.peek();
+			historyTable.pop();
+		}
+	}
+	
+
 }

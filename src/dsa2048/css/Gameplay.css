@@ -7,22 +7,22 @@
 }
 
 .pn-score{
-	-fx-border-radius: 6 6 6 6;
-	-fx-background-radius: 6 6 6 6;
+	-fx-border-radius: 6.0 6.0 6.0 6.0;
+	-fx-background-radius: 6.0 6.0 6.0 6.0;
 }
 
 .pn-gameplay{
-	-fx-border-radius: 15 15 15 15;
-	-fx-background-radius: 15 15 15 15;
+	-fx-border-radius: 15.0 15.0 15.0 15.0;
+	-fx-background-radius: 15.0 15.0 15.0 15.0;
 }
 
 .btn-gameBtn{
-	-fx-border-radius: 6 6 6 6;
-	-fx-background-radius: 6 6 6 6;
+	-fx-border-radius: 6.0 6.0 6.0 6.0;
+	-fx-background-radius: 6.0 6.0 6.0 6.0;
 }
 
 .score{
-	-fx-font: 35px "source Sans Pro";
+	-fx-font: 35.0px "source Sans Pro";
 	-fx-font-weight: bold;
 }
 
@@ -33,3 +33,57 @@
 .txt-name{
 	-fx-fill: #786e65;
 }
+
+.title{
+	-fx-arc-height: 15.0;
+	-fx-arc-width: 15.0;
+	-fx-fill: #cdc1b5;
+	-fx-stroke-width: 0.0;
+}
+
+.title-2{
+	-fx-fill: #eee4da;
+}
+
+.title-4{
+	-fx-fill: #ece0c8;
+}
+
+.title-8{
+	-fx-fill: #f2b179;
+}
+
+.title-16{
+	-fx-fill: #f59563;
+}
+
+.title-32{
+	-fx-fill: #f57c5f;
+}
+
+.title-64{
+	-fx-fill: #f65d3b;
+}
+
+.title-128{
+	-fx-fill: #edce71;
+}
+
+.title-256{
+	-fx-fill: #edcc61;
+}
+
+.title-512{
+	-fx-fill: #ecc850;
+}
+
+.title-1024{
+	-fx-fill: #edc53f;
+}
+
+.title-2048{
+	-fx-fill: #edc53f;
+}
+
+
+
