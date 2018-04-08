@@ -79,20 +79,26 @@
             </Pane>
             <Text fx:id="textGameTitle" fill="#786e65" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2048" textAlignment="CENTER" wrappingWidth="291.34375">
                <font>
-                  <Font size="90.0" />
+                  <Font name="Clear Sans Bold" size="80.0" />
                </font>
             </Text>
-            <Button fx:id="btnUndo" layoutX="520.0" layoutY="95.0" mnemonicParsing="false" onAction="#onUndoButtonClicked" prefHeight="60.0" prefWidth="60.0" text="   " textFill="#bbada0">
+            <Button fx:id="btnUndo" layoutX="498.0" layoutY="103.0" mnemonicParsing="false" onAction="#onUndoButtonClicked" prefHeight="50.0" prefWidth="87.0" text="Undo" textFill="#fff7e5">
                <styleClass>
                   <String fx:value="sub-background" />
                   <String fx:value="btn-gameBtn" />
                </styleClass>
+               <font>
+                  <Font name="Source Sans Pro Black" size="21.0" />
+               </font>
             </Button>
-            <Button fx:id="btnRestart" layoutX="450.0" layoutY="95.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="   " textFill="#bbada0">
+            <Button fx:id="btnRestart" layoutX="358.0" layoutY="103.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" prefHeight="50.0" prefWidth="129.0" text="New game" textAlignment="CENTER" textFill="#fff7e5">
                <styleClass>
                   <String fx:value="sub-background" />
                   <String fx:value="btn-gameBtn" />
                </styleClass>
+               <font>
+                  <Font name="Source Sans Pro Black" size="21.0" />
+               </font>
             </Button>
          </children>
          <opaqueInsets>

@@ -193,7 +193,13 @@ public class GameplayController {
 			al.setContentText("GAME OVER!");
 			al.show();
 		}
-		System.out.println();
+//		System.out.println();
+	}
+	
+	@FXML
+	public void onRestartButtonClicked() {
+		GameplayContainer.restart();
+		this.render();
 	}
 	
 	@FXML
@@ -203,4 +209,5 @@ public class GameplayController {
 //		GameplayContainer.getGameTable().consoleDisplay();
 		this.render();
 	}
+
 }

@@ -1,3 +1,6 @@
+
+
+/*----------------------------*/
 .main-background{
 	-fx-background-color: #fbf8f1;
 }
@@ -6,6 +9,7 @@
 	-fx-background-color: #bbada0;
 }
 
+/*----------------------------*/
 .pn-score{
 	-fx-border-radius: 6.0 6.0 6.0 6.0;
 	-fx-background-radius: 6.0 6.0 6.0 6.0;
@@ -16,22 +20,28 @@
 	-fx-background-radius: 15.0 15.0 15.0 15.0;
 }
 
+/*----------------------------*/
 .btn-gameBtn{
+	-fx-background-color: #8f7a66;
 	-fx-border-radius: 6.0 6.0 6.0 6.0;
 	-fx-background-radius: 6.0 6.0 6.0 6.0;
+	
 }
 
+
+
+/*----------------------------*/
 .score{
-	-fx-font: 35.0px "source Sans Pro";
+	-fx-font: 35.0px "ClearSans";
 	-fx-font-weight: bold;
 }
 
 .txt-score{
-	-fx-fill: #f1e5d9;
+	-fx-fill: #fffff6;
 }
 
 .txt-name{
-	-fx-fill: #786e65;
+	-fx-fill: #fffff6;
 }
 
 .title{

@@ -33,8 +33,13 @@ class Table {
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	
 	public void pushUp() {
 		int topRow;
+		boolean isMoved = false;
 		for (int y = 0; y < 4; y++) {
 			topRow = 0;
 			for (int x = 0; x < 4; x++) {
@@ -43,6 +48,7 @@ class Table {
 					table[topRow][y] = table[topRow][y] * 2;
 					table[x][y] = 0;
 					topRow++;
+					isMoved = true;
 				} else {
 					if (table[topRow][y] != 0) {
 						topRow++;
@@ -50,14 +56,19 @@ class Table {
 					if (topRow != x) {
 						table[topRow][y] = table[x][y];
 						table[x][y] = 0;
+						isMoved = true;
 					}
 				}
 			}
+		}
+		if (isMoved) {
+			generateNumber();
 		}
 	}
 
 	public void pushDown() {
 		int lastRow;
+		boolean isMoved = false;
 		for (int y = 0; y < 4; y++) {
 			lastRow = 3;
 			for (int x = 3; x >= 0; x--) {
@@ -67,20 +78,26 @@ class Table {
 					table[lastRow][y] = table[lastRow][y] * 2;
 					table[x][y] = 0;
 					lastRow--;
+					isMoved = true;
 				} else {
 					if (table[lastRow][y] != 0)
 						lastRow--;
 					if (lastRow != x) {
 						table[lastRow][y] = table[x][y];
 						table[x][y] = 0;
+						isMoved = true;
 					}
 				}
 			}
+		}
+		if (isMoved) {
+			generateNumber();
 		}
 	}
 
 	public void pushLeft() {
 		int lastleftCol;
+		boolean isMoved = false;
 		for (int x = 0; x < 4; x++) {
 			lastleftCol = 0;
 			for (int y = 0; y < 4; y++) {
@@ -89,20 +106,26 @@ class Table {
 				} else if (table[x][y] == table[x][lastleftCol]) {
 					table[x][lastleftCol] = table[x][lastleftCol] * 2;
 					table[x][y] = 0;
+					isMoved = true;
 				} else {
 					if (table[x][lastleftCol] != 0)
 						lastleftCol++;
 					if (lastleftCol != y) {
 						table[x][lastleftCol] = table[x][y];
 						table[x][y] = 0;
+						isMoved = true;
 					}
 				}
 			}
+		}
+		if (isMoved) {
+			generateNumber();
 		}
 	}
 
 	public void pushRight() {
 		int lastrightcol;
+		boolean isMoved = false;
 		for (int x = 0; x < 4; x++) {
 			lastrightcol = 3;
 			for (int y = 3; y >= 0; y--) {
@@ -111,15 +134,20 @@ class Table {
 				} else if (table[x][y] == table[x][lastrightcol]) {
 					table[x][lastrightcol] = table[x][lastrightcol] * 2;
 					table[x][y] = 0;
+					isMoved = true;
 				} else {
 					if (table[x][lastrightcol] != 0)
 						lastrightcol--;
 					if (lastrightcol != y) {
 						table[x][lastrightcol] = table[x][y];
 						table[x][y] = 0;
+						isMoved = true;
 					}
 				}
 			}
+		}
+		if (isMoved) {
+			generateNumber();
 		}
 	}
 
@@ -192,6 +220,11 @@ public class GameplayContainer {
 	
 	public static void popTable() {
 		historyTable.pop();
+	}
+	
+	public static void restart() {
+		initialize();
+		historyTable.clear();
 	}
 	
 	public static void undo() {
