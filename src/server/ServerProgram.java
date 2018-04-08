@@ -28,6 +28,7 @@ public class ServerProgram {
 			while (true) {
 				Socket socket = listener.accept();
 				PlayerThread handleThread = new PlayerThread(socket, clientNumber++);
+				handleThread.start();
 			}
 		} catch( IOException e) {
 			

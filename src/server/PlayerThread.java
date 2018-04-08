@@ -16,7 +16,7 @@ public class PlayerThread extends Thread {
 		this.clientNumber = clientNumber;
 		this.socket = socket;
 		
-		System.out.println("New connection #" + clientNumber + "at thread " + this);
+		System.out.println("New connection #" + clientNumber + " at thread " + this);
 	}
 	
 	@Override
@@ -38,6 +38,7 @@ public class PlayerThread extends Thread {
 					os.write(">> OK");
                     os.newLine();
                     os.flush();
+                    System.exit(0);
                     break;
 				}
 			}

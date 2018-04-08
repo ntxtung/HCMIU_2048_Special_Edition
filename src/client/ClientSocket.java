@@ -35,13 +35,31 @@ public class ClientSocket {
 			is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 			return;
 		}
+		
+		
+		Thread inputMsg = new Thread() {
+			@Override
+			public void run() {
+				try {
+					String msg;
+					while (true) {
+						msg = is.readLine();
+						System.out.println(msg);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		inputMsg.start();
 	}
 	
 	public static boolean sendMsg(String msg) {
 		try {
-			if (socket.isConnected() && os != null) {
+			if (socket.isConnected()) {
 				os.write(msg);
 				os.newLine();
 				os.flush();
