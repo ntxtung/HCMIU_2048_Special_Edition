@@ -2,18 +2,15 @@ package dsa2048;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Gameplay.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			
 			scene.getStylesheets().add(getClass().getResource("css/Gameplay.css").toExternalForm());
