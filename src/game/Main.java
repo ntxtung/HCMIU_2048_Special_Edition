@@ -1,6 +1,5 @@
 package game;
 	
-import client.ClientSocket;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,12 +10,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ClientSocket.getInstance();
+			//ClientSocket.getInstance();
 			
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("MainForm.fxml"));
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			
-			scene.getStylesheets().add(getClass().getResource("css/Gameplay.css").toExternalForm());
+			//scene.getStylesheets().add(getClass().getResource("css/Gameplay.css").toExternalForm());
 //			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setTitle("2048");
 			primaryStage.setScene(scene);

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="199.0" prefWidth="460.0" style="-fx-background-color: #545454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dsa2048.LoginController">
+<AnchorPane prefHeight="199.0" prefWidth="460.0" style="-fx-background-color: #545454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.LoginController">
    <children>
       <ImageView fitHeight="172.0" fitWidth="170.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="15.0">
          <image>
