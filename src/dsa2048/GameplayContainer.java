@@ -1,238 +1,236 @@
 package dsa2048;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
-
-class Table {
-	private Integer size;
-	private Integer[][] table;
-	
-	public Table clone() {
-		Table cloner = new Table(this.size);
-		for (int i=0; i<size; i++)
-			for (int j=0; j<size; j++)
-				cloner.table[i][j] = this.table[i][j];
-		return cloner;
-	}
-	
-	public Table(int size) {
-		this.size = size;
-		table = new Integer[size][size];
-		for (int i = 0; i < this.size; i++) {
-			for (int j = 0; j < this.size; j++)
-				table[i][j] = 0;
-		}
-	}
-
-	public void consoleDisplay() {
-		for (int i = 0; i < this.size; i++) {
-			for (int j = 0; j < this.size; j++)
-				System.out.print(table[i][j] + " ");
-			System.out.println();
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	
-	public void pushUp() {
-		int topRow;
-		boolean isMoved = false;
-		for (int y = 0; y < 4; y++) {
-			topRow = 0;
-			for (int x = 0; x < 4; x++) {
-				if (topRow == x || table[x][y] == 0) {
-				} else if (table[x][y] == table[topRow][y]) {
-					table[topRow][y] = table[topRow][y] * 2;
-					table[x][y] = 0;
-					topRow++;
-					isMoved = true;
-				} else {
-					if (table[topRow][y] != 0) {
-						topRow++;
-					}
-					if (topRow != x) {
-						table[topRow][y] = table[x][y];
-						table[x][y] = 0;
-						isMoved = true;
-					}
-				}
-			}
-		}
-		if (isMoved) {
-			generateNumber();
-		}
-	}
-
-	public void pushDown() {
-		int lastRow;
-		boolean isMoved = false;
-		for (int y = 0; y < 4; y++) {
-			lastRow = 3;
-			for (int x = 3; x >= 0; x--) {
-				if (lastRow == x || table[x][y] == 0) {
-					continue;
-				} else if (table[x][y] == table[lastRow][y]) {
-					table[lastRow][y] = table[lastRow][y] * 2;
-					table[x][y] = 0;
-					lastRow--;
-					isMoved = true;
-				} else {
-					if (table[lastRow][y] != 0)
-						lastRow--;
-					if (lastRow != x) {
-						table[lastRow][y] = table[x][y];
-						table[x][y] = 0;
-						isMoved = true;
-					}
-				}
-			}
-		}
-		if (isMoved) {
-			generateNumber();
-		}
-	}
-
-	public void pushLeft() {
-		int lastleftCol;
-		boolean isMoved = false;
-		for (int x = 0; x < 4; x++) {
-			lastleftCol = 0;
-			for (int y = 0; y < 4; y++) {
-				if (lastleftCol == y || table[x][y] == 0) {
-
-				} else if (table[x][y] == table[x][lastleftCol]) {
-					table[x][lastleftCol] = table[x][lastleftCol] * 2;
-					table[x][y] = 0;
-					isMoved = true;
-				} else {
-					if (table[x][lastleftCol] != 0)
-						lastleftCol++;
-					if (lastleftCol != y) {
-						table[x][lastleftCol] = table[x][y];
-						table[x][y] = 0;
-						isMoved = true;
-					}
-				}
-			}
-		}
-		if (isMoved) {
-			generateNumber();
-		}
-	}
-
-	public void pushRight() {
-		int lastrightcol;
-		boolean isMoved = false;
-		for (int x = 0; x < 4; x++) {
-			lastrightcol = 3;
-			for (int y = 3; y >= 0; y--) {
-				if (lastrightcol == y || table[x][y] == 0) {
-
-				} else if (table[x][y] == table[x][lastrightcol]) {
-					table[x][lastrightcol] = table[x][lastrightcol] * 2;
-					table[x][y] = 0;
-					isMoved = true;
-				} else {
-					if (table[x][lastrightcol] != 0)
-						lastrightcol--;
-					if (lastrightcol != y) {
-						table[x][lastrightcol] = table[x][y];
-						table[x][y] = 0;
-						isMoved = true;
-					}
-				}
-			}
-		}
-		if (isMoved) {
-			generateNumber();
-		}
-	}
-
-	/**
-	 * 
-	 */
-	@SuppressWarnings("deprecation")
-	public void generateNumber() {
-		Random r = new Random();
-		ArrayList<Integer> emptyspacesX = new ArrayList<Integer>();
-		ArrayList<Integer> emptyspacesY = new ArrayList<Integer>();
-		for (int x = 0; x < this.size; x++) {
-			for (int y = 0; y < this.size; y++) {
-				if (table[x][y] == 0) {
-					emptyspacesX.add(new Integer(x));
-					emptyspacesY.add(new Integer(y));
-				}
-			}
-		}
-		int choice = r.nextInt(emptyspacesX.size());
-		int numchooser = r.nextInt(10); // value 0-9
-		int newPopup = 2;
-		if (numchooser == 0) {
-			newPopup = 4;
-		}
-		int X = emptyspacesX.get(choice);
-		int Y = emptyspacesY.get(choice);
-		table[X][Y] = newPopup;
-	}
-
-	public Integer get(int row, int col) {
-		return table[row][col];
-	}
-	
-	public Boolean isOver(){
-        boolean check = true;
-        for (int i=0; i<4;i++)
-            for(int j=0; j<4; j++){
-                if (this.table[i][j]==0)
-                    check = false;
-                if (i!= 3){
-                    if(this.table[i][j]==this.table[i+1][j])
-                        check = false;
-                }
-                if (j!= 3){
-                    if(this.table[i][j]==this.table[i][j+1])
-                        check = false;
-                }
-            }
-        return check;
-    }
-}
+import java.util.Collections;
+import java.util.List;
 
 public class GameplayContainer {
-	private static Table gameTable = new Table(4);
-	private static Stack<Table> historyTable = new Stack<Table>();
-	
-	public static Table getGameTable() {
-		return gameTable;
+	private GameGrid gameGrid;
+
+	public boolean canUndo;
+	private long score = 0;
+	private long highScore = 0;
+	private long lastScore = 0;
+	private long bufferScore = 0;
+
+	private int numX = 4;
+	private int numY = 4;
+
+	public GameplayContainer() {
+
 	}
 
-	public static void initialize() {
-		gameTable = new Table(4);
-		gameTable.generateNumber();
+	public void newGame() {
+		if (gameGrid == null) {
+			this.gameGrid = new GameGrid(numX, numY);
+		} else {
+			gameGrid.clearField();
+		}
+
+		if (score >= highScore) {
+			highScore = score;
+		}
+
+		score = 0;
+		this.addRandomTile();
+		this.addRandomTile();
+
 	}
-	
-	public static void pushTable() {
-		historyTable.push(gameTable.clone());
-	}
-	
-	public static void popTable() {
-		historyTable.pop();
-	}
-	
-	public static void restart() {
-		initialize();
-		historyTable.clear();
-	}
-	
-	public static void undo() {
-		if (!historyTable.isEmpty()) {
-			gameTable = historyTable.peek();
-			historyTable.pop();
+
+	private void addRandomTile() {
+		if (gameGrid.isCellsAvailable()) {
+			int value = Math.random() < 0.9 ? 2 : 4;
+			Tile tile = new Tile(gameGrid.randomAvailableCell(), value);
+			spawnTile(tile);
 		}
 	}
-	
 
+	private void spawnTile(Tile tile) {
+		gameGrid.insertTile(tile);
+	}
+
+	private void recordHighScore() {
+	}
+
+	private long getHighScore() {
+		return 0;
+	}
+
+	private void prepareTiles() {
+		for (Tile[] array : gameGrid.field) {
+			for (Tile tile : array) {
+				if (gameGrid.isCellOccupied(tile)) {
+					tile.setMergedFrom(null);
+				}
+			}
+		}
+	}
+
+	private void moveTile(Tile tile, Cell cell) {
+		gameGrid.field[tile.getX()][tile.getY()] = null;
+		gameGrid.field[cell.getX()][cell.getY()] = tile;
+		tile.updatePosition(cell);
+	}
+
+	private void saveUndoState() {
+		gameGrid.saveTiles();
+		canUndo = true;
+		lastScore = bufferScore;
+	}
+
+	private void prepareUndoState() {
+		gameGrid.prepareSaveTiles();
+		bufferScore = score;
+	}
+
+	public void move(int direction) {
+		// animation cancel()
+		// 0: up, 1: right, 2: down, 3: left
+		if (!movesAvailable()) {
+			return;
+		}
+		prepareUndoState();
+		Cell vector = getVector(direction);
+		List<Integer> traversalsX = buildTraversalsX(vector);
+		List<Integer> traversalsY = buildTraversalsY(vector);
+		boolean moved = false;
+
+		prepareTiles();
+
+		for (int x : traversalsX) {
+			for (int y : traversalsY) {
+				Cell cell = new Cell(x, y);
+				Tile tile = gameGrid.getCellContent(cell);
+
+				if (tile != null) {
+					Cell[] positions = findFarthestPosition(cell, vector);
+					Tile next = gameGrid.getCellContent(positions[1]);
+
+					if (next != null && next.getValue() == tile.getValue() && next.getMergedFrom() == null) {
+						Tile merged = new Tile(positions[1], tile.getValue() * 2);
+						Tile[] temp = { tile, next };
+						merged.setMergedFrom(temp);
+
+						gameGrid.insertTile(merged);
+						gameGrid.removeTile(tile);
+
+						// Converge the two tiles' positions
+						tile.updatePosition(positions[1]);
+
+						int[] extras = { x, y };
+
+						// Update the score
+						score = score + merged.getValue();
+						highScore = Math.max(score, highScore);
+
+					} else {
+						moveTile(tile, positions[0]);
+						int[] extras = { x, y, 0 };
+					}
+
+					if (!positionsEqual(cell, tile)) {
+						moved = true;
+					}
+				}
+			}
+		}
+
+		if (moved) {
+			saveUndoState();
+			addRandomTile();
+			checkLose();
+		}
+	}
+
+	private void checkLose() {
+		if (!movesAvailable()) {
+			endGame();
+		}
+	}
+
+	private void endGame() {
+		if (score >= highScore) {
+			highScore = score;
+			recordHighScore();
+		}
+	}
+
+	private Cell getVector(int direction) {
+		Cell[] map = { new Cell(0, -1), // up
+				new Cell(1, 0), // right
+				new Cell(0, 1), // down
+				new Cell(-1, 0) // left
+		};
+		return map[direction];
+	}
+
+	private List<Integer> buildTraversalsX(Cell vector) {
+		List<Integer> traversals = new ArrayList<>();
+
+		for (int x = 0; x < numX; x++) {
+			traversals.add(x);
+		}
+		if (vector.getX() == 1) {
+			Collections.reverse(traversals);
+		}
+
+		return traversals;
+	}
+
+	private List<Integer> buildTraversalsY(Cell vector) {
+		List<Integer> traversals = new ArrayList<>();
+
+		for (int x = 0; x < numY; x++) {
+			traversals.add(x);
+		}
+		if (vector.getY() == 1) {
+			Collections.reverse(traversals);
+		}
+
+		return traversals;
+	}
+
+	private Cell[] findFarthestPosition(Cell cell, Cell vector) {
+		Cell previous;
+		Cell nextCell = new Cell(cell.getX(), cell.getY());
+		do {
+			previous = nextCell;
+			nextCell = new Cell(previous.getX() + vector.getX(), previous.getY() + vector.getY());
+		} while (gameGrid.isCellWithinBounds(nextCell) && gameGrid.isCellAvailable(nextCell));
+
+		return new Cell[] { previous, nextCell };
+	}
+
+	private boolean movesAvailable() {
+		return gameGrid.isCellsAvailable() || tileMatchesAvailable();
+	}
+
+	private boolean tileMatchesAvailable() {
+		Tile tile;
+
+		for (int x = 0; x < numX; x++) {
+			for (int y = 0; y < numY; y++) {
+				tile = gameGrid.getCellContent(new Cell(x, y));
+
+				if (tile != null) {
+					for (int direction = 0; direction < 4; direction++) {
+						Cell vector = getVector(direction);
+						Cell cell = new Cell(x + vector.getX(), y + vector.getY());
+
+						Tile other = gameGrid.getCellContent(cell);
+
+						if (other != null && other.getValue() == tile.getValue()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean positionsEqual(Cell first, Cell second) {
+		return first.getX() == second.getX() && first.getY() == second.getY();
+	}
 }
