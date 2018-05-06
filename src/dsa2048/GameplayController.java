@@ -16,105 +16,19 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 public class GameplayController {
-	class Title {
-		private StackPane title;
-		private Rectangle rect;
-		private Integer value;
-		private Text text;
-
-		public Title(Integer value) {
-			rect = new Rectangle();
-			Double size = 130.0;
-			rect.setWidth(size);
-			rect.setHeight(size);
-			this.value = value;
-
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-
-			title = new StackPane();
-
-			text = new Text();
-			text.setTextAlignment(TextAlignment.CENTER);
-			text.setText(this.value.toString());
-			text.setFont(new Font(40));
-			text.setFill(Color.WHITE);
-			title.getChildren().addAll(rect, text);
-		}
-
-		public StackPane getTitle() {
-			return title;
-		}
-
-		public void updateTitle() {
-			switch (this.value) {
-			case 2:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-2");
-				break;
-			case 4:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-4");
-				break;
-			case 8:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-8");
-				break;
-			case 16:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-16");
-				break;
-			case 32:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-32");
-				break;
-			case 64:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-64");
-				break;
-			case 128:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				rect.getStyleClass().add("title-128");
-				break;
-
-			default:
-				rect.getStyleClass().clear();
-				rect.getStyleClass().add("title");
-				break;
-			}
-		}
-
-		public void setValue(Integer newValue) {
-			this.value = newValue;
-			if (this.value>0) {
-				text.setText(this.value.toString());
-			} else {
-				text.setText("");
-			}
-			
-			this.updateTitle();
-		}
-	}
 
 	class TitleList {
-		private Title[][] listOfTitles = new Title[4][4];
+		private TitleFX[][] listOfTitles = new TitleFX[4][4];
 
 		public TitleList() {
 			for (int i = 0; i < paneGame.getRowCount(); i++) {
 				for (int j = 0; j < paneGame.getColumnCount(); j++) {
-					listOfTitles[i][j] = new Title(GameplayContainer.getGameTable().get(i, j));
+					listOfTitles[i][j] = new TitleFX(GameplayContainer.getGameTable().get(i, j));
 				}
 			}
 		}
 
-		public Title get(int row, int col) {
+		public TitleFX get(int row, int col) {
 			return listOfTitles[row][col];
 		}
 
@@ -177,14 +91,13 @@ public class GameplayController {
 		if (e.getCode() == KeyCode.W) {
 			GameplayContainer.getGameTable().move(MoveType.UP);
 		} else if (e.getCode() == KeyCode.A) {
-			GameplayContainer.getGameTable().move(MoveType.DOWN);
-		} else if (e.getCode() == KeyCode.S) {
 			GameplayContainer.getGameTable().move(MoveType.LEFT);
+		} else if (e.getCode() == KeyCode.S) {
+			GameplayContainer.getGameTable().move(MoveType.DOWN);
 		} else if (e.getCode() == KeyCode.D) {
 			GameplayContainer.getGameTable().move(MoveType.RIGHT);
 		}
 
-		GameplayContainer.getGameTable().generateNumber();
 //		GameplayContainer.getGameTable().consoleDisplay();
 		this.render();
 		if (GameplayContainer.getGameTable().isOver()) {

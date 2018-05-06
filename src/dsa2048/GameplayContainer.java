@@ -1,7 +1,5 @@
 package dsa2048;
 
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Stack;
 
 public class GameplayContainer {
@@ -14,6 +12,7 @@ public class GameplayContainer {
 
 	public static void initialize() {
 		gameTable = new GameGrid(4);
+		gameTable.generateNumber();
 		gameTable.generateNumber();
 	}
 	
