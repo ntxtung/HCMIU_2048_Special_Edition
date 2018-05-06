@@ -1,6 +1,8 @@
 package dsa2048;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class GameGrid {
@@ -50,37 +52,135 @@ public class GameGrid {
 			pushRight();
 			break;
 		}
+		if (numEmptyCell() > 0) {
+			generateNumber();
+		}
 	}
 
 	private void pushUp() {
 		for (int col = 0; col < size; col++) {
-			//eliminateZeroes
-			for (int row=0; row < size; row++) {
-				if (table[row][col] == 0) {
-					for (int i = row+1; i < size; i++) {
-						if (table[i][col] != 0) {
-							table[row][col] = table[i][col];
-							table[i][col] = 0;
-						}
-					}
+			ArrayList<Integer> list = new ArrayList<>();
+			for (int row = 0; row < size; row++) {
+				list.add(table[row][col]);
+			}
+			// eliminate zero
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).equals(0))
+					list.remove(i--);
+			}
+			// push
+			int i = 0;
+			while (i < list.size()-1) {
+				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
+					list.set(i, list.get(i) * 2);
+					list.remove(i + 1);
+				}
+				i++;
+			}
+			for (int row = 0; row < size; row++) {
+				if (row < list.size()) {
+					table[row][col] = list.get(row);
+				} else {
+					table[row][col] = 0;
 				}
 			}
-			//push
-			
-			
 		}
 	}
 
 	private void pushDown() {
-
+		for (int col = 0; col < size; col++) {
+			ArrayList<Integer> list = new ArrayList<>();
+			for (int row = 0; row < size; row++) {
+				list.add(table[row][col]);
+			}
+			// eliminate zero
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).equals(0))
+					list.remove(i--);
+			}
+			// push
+			int i = 0;
+			while (i < list.size()) {
+				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
+					list.set(i, list.get(i) * 2);
+					list.remove(i + 1);
+				}
+				i++;
+			}
+			// return
+			Collections.reverse(list);
+			for (int row = size-1; row >=0; row--) {
+				if (list.size() > 0) {
+					table[row][col] = list.get(0);
+					list.remove(0);
+				} else {
+					table[row][col] = 0;
+				}
+			}
+		}
 	}
 
 	private void pushLeft() {
-
+		for (int row = 0; row < size; row++) {
+			ArrayList<Integer> list = new ArrayList<>();
+			for (int col = 0; col < size; col++) {
+				list.add(table[row][col]);
+			}
+			// eliminate zero
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).equals(0))
+					list.remove(i--);
+			}
+			// push
+			int i = 0;
+			while (i < list.size()-1) {
+				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
+					list.set(i, list.get(i) * 2);
+					list.remove(i + 1);
+				}
+				i++;
+			}
+			for (int col = 0; col < size; col++) {
+				if (col < list.size()) {
+					table[row][col] = list.get(col);
+				} else {
+					table[row][col] = 0;
+				}
+			}
+		}
 	}
 
 	private void pushRight() {
-
+		for (int row = 0; row < size; row ++) {
+			ArrayList<Integer> list = new ArrayList<>();
+			for (int col = 0; col < size; col++) {
+				list.add(table[row][col]);
+			}
+			// eliminate zero
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).equals(0))
+					list.remove(i--);
+			}
+			// push
+			int i = 0;
+			while (i < list.size()) {
+				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
+					list.set(i, list.get(i) * 2);
+					list.remove(i + 1);
+				}
+				i++;
+			}
+			// return
+			Collections.reverse(list);
+			for (int col = size-1; col >=0; col--) {
+				if (list.size() > 0) {
+					table[row][col] = list.get(0);
+					list.remove(0);
+				} else {
+					table[row][col] = 0;
+				}
+			}
+		}
 	}
 
 	/**
@@ -112,18 +212,17 @@ public class GameGrid {
 	public Integer get(int row, int col) {
 		return table[row][col];
 	}
-	
+
 	public Integer numEmptyCell() {
 		Integer n = 0;
-		for (int row=0; row < size; row++) {
-			for (int col=0; col < size; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				if (table[row][col] == 0)
 					n++;
 			}
 		}
 		return n;
 	}
-	
 
 	public Boolean isOver() {
 		if (this.numEmptyCell() == 0) {
@@ -139,7 +238,7 @@ public class GameGrid {
 					}
 				}
 			return true;
-		} 
+		}
 		return false;
 	}
 
