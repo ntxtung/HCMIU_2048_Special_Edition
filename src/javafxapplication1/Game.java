@@ -128,7 +128,7 @@ public class Game {
     }
     public void pushUp()
     {
-        System.out.println("Pushing Up...");
+ 
         int topRow;
 		for (int y = 0; y < 4; y++) 
                 {
@@ -160,7 +160,7 @@ public class Game {
     }
     public void pushdown()
     {
-        System.out.println("Pushing Down...");
+       
         int lastRow;
         for(int y=0;y<4;y++)
         {
@@ -191,7 +191,7 @@ public class Game {
     
     public void pushleft()
     {
-        System.out.println("Pushing Left...");
+       
         int lastleftCol;
         for(int x=0;x<4;x++)
         {
@@ -239,7 +239,7 @@ public class Game {
     }
     public void pushright()
     {
-        System.out.println("Pushing Right...");
+       
         int lastrightcol;
         for(int x=0;x<4;x++)
         {
