@@ -10,7 +10,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml/Gameplay.fxml"));
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			
 			scene.getStylesheets().add(getClass().getResource("css/Gameplay.css").toExternalForm());

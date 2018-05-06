@@ -175,13 +175,13 @@ public class GameplayController {
 	public void onKeyboardPressed(KeyEvent e) {
 		GameplayContainer.pushTable();
 		if (e.getCode() == KeyCode.W) {
-			GameplayContainer.getGameTable().pushUp();
+			GameplayContainer.getGameTable().move(MoveType.UP);
 		} else if (e.getCode() == KeyCode.A) {
-			GameplayContainer.getGameTable().pushLeft();
+			GameplayContainer.getGameTable().move(MoveType.DOWN);
 		} else if (e.getCode() == KeyCode.S) {
-			GameplayContainer.getGameTable().pushDown();
+			GameplayContainer.getGameTable().move(MoveType.LEFT);
 		} else if (e.getCode() == KeyCode.D) {
-			GameplayContainer.getGameTable().pushRight();
+			GameplayContainer.getGameTable().move(MoveType.RIGHT);
 		}
 
 		GameplayContainer.getGameTable().generateNumber();
