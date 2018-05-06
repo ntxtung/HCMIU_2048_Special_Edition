@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ClientSocket {
+	
+	private static ClientSocket instance = null;
 
 	private static String hostname = "localhost";
 	private static int port = 2048;
@@ -17,13 +19,24 @@ public class ClientSocket {
 	private static BufferedReader is = null;
 	
 	public static void main(String[] args) {
+//		connect();
+//		String msg = "";
+//		Scanner sc = new Scanner(System.in);
+//		while (!msg.equals("QUIT")) {
+//			msg = sc.nextLine();
+//			sendMsg(msg);
+//		}
+	}
+	
+	private ClientSocket() {
 		connect();
-		String msg = "";
-		Scanner sc = new Scanner(System.in);
-		while (!msg.equals("QUIT")) {
-			msg = sc.nextLine();
-			sendMsg(msg);
+	}
+	
+	public static ClientSocket getInstance() {
+		if (instance == null) {
+			instance = new ClientSocket();
 		}
+		return instance;
 	}
 	
 	public static void connect() {
@@ -33,6 +46,7 @@ public class ClientSocket {
 			
 			os = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -46,6 +60,7 @@ public class ClientSocket {
 				try {
 					String msg;
 					while (true) {
+					
 						msg = is.readLine();
 						System.out.println(msg);
 					}
@@ -57,18 +72,18 @@ public class ClientSocket {
 		inputMsg.start();
 	}
 	
-	public static boolean sendMsg(String msg) {
+	public static String sendMsg(String msg) {
 		try {
 			if (socket.isConnected()) {
 				os.write(msg);
 				os.newLine();
 				os.flush();
-				return true;
+				return is.readLine();
 			} else
-				return false;
+				return null;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	

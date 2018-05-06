@@ -1,4 +1,4 @@
-package dsa2048;
+package game;
 
 import client.ClientSocket;
 import javafx.event.ActionEvent;
