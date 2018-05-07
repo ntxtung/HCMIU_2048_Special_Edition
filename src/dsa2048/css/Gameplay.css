@@ -95,5 +95,19 @@
 	-fx-fill: #edc53f;
 }
 
+.title-out{
+	
+}
 
+.txt-tile{
+	-fx-font: 40.0px "ClearSans";
+	-fx-font-weight: bold;
+}
 
+.txt-black{
+	-fx-fill: #776e65;
+}
+
+.txt-white{
+	-fx-fill: #f9f6f2;
+}
