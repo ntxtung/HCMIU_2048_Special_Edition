@@ -1,5 +1,7 @@
 package dsa2048;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,6 +14,7 @@ public class TitleFX {
 	private Rectangle rect;
 	private Integer value;
 	private Text text;
+	private ArrayList<String> color = new ArrayList<>();
 
 	public TitleFX(Integer value) {
 		rect = new Rectangle();
@@ -29,7 +32,8 @@ public class TitleFX {
 		text.setTextAlignment(TextAlignment.CENTER);
 		text.setText(this.value.toString());
 		text.setFont(new Font(40));
-		text.setFill(Color.WHITE);
+		text.setFill(Color.BLACK);
+		text.getStyleClass().add("txt-tile");
 		title.getChildren().addAll(rect, text);
 	}
 
@@ -38,48 +42,16 @@ public class TitleFX {
 	}
 
 	public void updateTitle() {
-		switch (this.value) {
-		case 2:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-2");
-			break;
-		case 4:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-4");
-			break;
-		case 8:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-8");
-			break;
-		case 16:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-16");
-			break;
-		case 32:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-32");
-			break;
-		case 64:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-64");
-			break;
-		case 128:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			rect.getStyleClass().add("title-128");
-			break;
-
-		default:
-			rect.getStyleClass().clear();
-			rect.getStyleClass().add("title");
-			break;
-		}
+		rect.getStyleClass().clear();
+		rect.getStyleClass().add("title");
+		if (this.value >= 2 && this.value <=2048)
+			rect.getStyleClass().add("title-" + this.value.toString());
+		text.getStyleClass().clear();
+		text.getStyleClass().add("txt-tile");
+		if (this.value < 8)
+			text.getStyleClass().add("txt-black");
+		else
+			text.getStyleClass().add("txt-white");
 	}
 
 	public void setValue(Integer newValue) {

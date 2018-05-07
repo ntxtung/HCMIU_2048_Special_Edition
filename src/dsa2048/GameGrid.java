@@ -2,12 +2,12 @@ package dsa2048;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class GameGrid {
 	private Integer size;
 	private Integer[][] table;
+	private Integer score;
 
 	public GameGrid clone() {
 		GameGrid cloner = new GameGrid(this.size);
@@ -24,6 +24,7 @@ public class GameGrid {
 			for (int j = 0; j < this.size; j++)
 				table[i][j] = 0;
 		}
+		this.score = 0;
 	}
 
 	public void consoleDisplay() {
@@ -70,9 +71,10 @@ public class GameGrid {
 			}
 			// push
 			int i = 0;
-			while (i < list.size()-1) {
+			while (i < list.size() - 1) {
 				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
 					list.set(i, list.get(i) * 2);
+					score += list.get(i);
 					list.remove(i + 1);
 				}
 				i++;
@@ -103,13 +105,14 @@ public class GameGrid {
 			while (i < list.size()) {
 				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
 					list.set(i, list.get(i) * 2);
+					score += list.get(i);
 					list.remove(i + 1);
 				}
 				i++;
 			}
 			// return
 			Collections.reverse(list);
-			for (int row = size-1; row >=0; row--) {
+			for (int row = size - 1; row >= 0; row--) {
 				if (list.size() > 0) {
 					table[row][col] = list.get(0);
 					list.remove(0);
@@ -133,9 +136,10 @@ public class GameGrid {
 			}
 			// push
 			int i = 0;
-			while (i < list.size()-1) {
+			while (i < list.size() - 1) {
 				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
 					list.set(i, list.get(i) * 2);
+					score += list.get(i);
 					list.remove(i + 1);
 				}
 				i++;
@@ -151,7 +155,7 @@ public class GameGrid {
 	}
 
 	private void pushRight() {
-		for (int row = 0; row < size; row ++) {
+		for (int row = 0; row < size; row++) {
 			ArrayList<Integer> list = new ArrayList<>();
 			for (int col = 0; col < size; col++) {
 				list.add(table[row][col]);
@@ -166,13 +170,14 @@ public class GameGrid {
 			while (i < list.size()) {
 				if (i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) {
 					list.set(i, list.get(i) * 2);
+					score += list.get(i);
 					list.remove(i + 1);
 				}
 				i++;
 			}
 			// return
 			Collections.reverse(list);
-			for (int col = size-1; col >=0; col--) {
+			for (int col = size - 1; col >= 0; col--) {
 				if (list.size() > 0) {
 					table[row][col] = list.get(0);
 					list.remove(0);
@@ -240,6 +245,10 @@ public class GameGrid {
 			return true;
 		}
 		return false;
+	}
+
+	public Integer getScore() {
+		return score;
 	}
 
 }
