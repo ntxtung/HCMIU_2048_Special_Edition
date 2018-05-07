@@ -8,20 +8,30 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Arrays;
 
+import game.Player;
+
 public class PlayerThread extends Thread {
 	
 	private int clientNumber;
 	private Socket socket;
 	private boolean isLoggedIn = false;
 	
+	private IMsgProcessable room = null;
+	
 	private BufferedReader is;
 	private BufferedWriter os;
+	
+	private Player player;
 	
 	public PlayerThread(Socket socket, int clientNumber) {
 		this.clientNumber = clientNumber;
 		this.socket = socket;
 		
 		System.out.println("New connection #" + clientNumber + " at thread " + this);
+	}
+	
+	public int getClientNumber() {
+		return clientNumber;
 	}
 	
 	@Override
@@ -44,13 +54,28 @@ public class PlayerThread extends Thread {
 				subStr = msg.split("@@");
 				System.out.println(Arrays.toString(subStr));
 				
+				/// PROCESSING MESSAGE
+				
 				if (subStr[0].equals("login"))
 					if (Login.getInstance().isLoginValid(subStr[1], subStr[2]) == true) { //login successfully
 						feedback("LOGIN SUCCESSFULLY");
-					} else 
-						feedback("INVALID LOGIN");
+					} else
+						sendInfoMsg("INVALID LOGIN!");
 					//System.out.println("Try to log in!");
 				
+				if (subStr[0].equals("wannajoin")) {	//wannajoin@@[ROOM ID]
+					int roomId = Integer.parseInt(subStr[1]);
+					Room roomWannaJoin = RoomContainer.getInstance().findRoom(roomId);
+					if (roomWannaJoin != null) {
+						roomWannaJoin.onReceivedMsgFromClient(this, msg);
+					} else {
+						sendInfoMsg("The room is no longer available!");
+					}
+					//feedback(String.format("acceptjoin@@%s", roomId));
+					
+				}
+				
+				////////////////////////////////
 				
 				if (msg.equals("QUIT")) {
 					feedback(">> OK closing");
@@ -65,7 +90,7 @@ public class PlayerThread extends Thread {
 		}
 	}
 	
-	private boolean feedback(String feedbackStr) {
+	public boolean feedback(String feedbackStr) {
 		try {
 			if (os != null) {
 				os.write(feedbackStr);
@@ -78,5 +103,9 @@ public class PlayerThread extends Thread {
 			return false;
 		}
 		return true;
+	}
+	
+	private boolean sendInfoMsg(String infoMsg) {
+		return feedback("msg@@" + infoMsg);
 	}
 } 

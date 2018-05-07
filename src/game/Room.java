@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +13,8 @@ public class Room extends RecursiveTreeObject<Room> {
     SimpleStringProperty players;
     SimpleStringProperty status;
     int maxPlayers = 1;
+    
+    private ArrayList<Player> playerList = new ArrayList<>();
  
     public Room(int id, String name, int maxPlayers) {
     	this.maxPlayers = maxPlayers;

@@ -14,14 +14,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 public class MainFormController implements Initializable {
 	
 	private ObservableList<Room> roomsList;
+	private ObservableList<Player> playersList;
 	
 	final ObservableList<Room> data = FXCollections.observableArrayList(
 		    new Room(1, "Room 1", 4),
@@ -43,6 +46,22 @@ public class MainFormController implements Initializable {
     private void onJoinRoom(ActionEvent event) {
     	roomsList.remove(1);
     }
+    
+    
+    @FXML
+    private void onPlayerMousePressed(MouseEvent event) {
+    	if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+    		System.out.println(tbPlayers.getSelectionModel().getSelectedItem().getValue());
+    	}
+    }
+
+    @FXML
+    private void onRoomMousePressed(MouseEvent event) {
+    	if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+    		System.out.println(tbRooms.getSelectionModel().getSelectedItem().getValue());
+    	}
+    }
+    
     
 
 	@Override
@@ -94,6 +113,36 @@ public class MainFormController implements Initializable {
 		tbRooms.setRoot(root);
 		tbRooms.setShowRoot(false);
 		
+		// -- Player table
+		JFXTreeTableColumn<Player, String> namePlayerCol = new JFXTreeTableColumn<>("Name");
+		namePlayerCol.setPrefWidth(200);
+		namePlayerCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Player,String>, ObservableValue<String>>() {
+
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Player, String> param) {
+				return param.getValue().getValue().name;
+			}
+		});
+		JFXTreeTableColumn<Player, String> levelCol = new JFXTreeTableColumn<>("Level");
+		levelCol.setPrefWidth(100);
+		levelCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Player,String>, ObservableValue<String>>() {
+
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Player, String> param) {
+				return param.getValue().getValue().level.asString();
+			}
+		});
+		
+		playersList = FXCollections.observableArrayList();
+		playersList.add(new Player(1, "Player 1", 1));
+		playersList.add(new Player(2, "Player 2", 2));
+		
+		TreeItem<Player> root2 = new RecursiveTreeItem<>(playersList, RecursiveTreeObject::getChildren);
+		
+		tbPlayers.getColumns().setAll(namePlayerCol, levelCol);
+		tbPlayers.setRoot(root2);
+		tbPlayers.setShowRoot(false);
+	
 	}
 
 }

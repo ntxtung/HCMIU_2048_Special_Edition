@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Player extends RecursiveTreeObject<Player> {
 	
 	SimpleIntegerProperty id;
-    SimpleStringProperty name;
+    SimpleStringProperty  name;
     SimpleIntegerProperty level;
  
     public Player(int id, String name, int level) {

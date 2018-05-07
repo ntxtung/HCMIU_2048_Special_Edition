@@ -1,11 +1,13 @@
 package server;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import game.Player;
 
 public class Login {
 	
@@ -76,6 +78,22 @@ public class Login {
 				return false;
 			}
 		}
+	}
+	
+	public static Player getPlayerInfo(String username, String password) {
+		if (isLoginValid(username, password)) {
+			try {
+				int playerId 	  = resultSet.getInt	(1);
+				String playerName = resultSet.getString (2);
+				int level 		  = resultSet.getInt	(3);
+				Player player = new Player(playerId, playerName, level);
+				return player;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
 	}
 	
 }

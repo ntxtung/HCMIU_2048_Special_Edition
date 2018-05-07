@@ -26,7 +26,7 @@
                         </ButtonBar>
                      </bottom>
                      <center>
-                        <JFXTreeTableView fx:id="tbRooms" BorderPane.alignment="CENTER">
+                        <JFXTreeTableView fx:id="tbRooms" onMousePressed="#onRoomMousePressed" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="20.0" right="10.0" top="20.0" />
                            </BorderPane.margin>
@@ -45,7 +45,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="628.0" prefWidth="357.0">
                <children>
-                  <JFXTreeTableView fx:id="tbPlayers" layoutX="14.0" layoutY="95.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <JFXTreeTableView fx:id="tbPlayers" layoutX="14.0" layoutY="95.0" onMousePressed="#onPlayerMousePressed" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <columns>
                         <TreeTableColumn prefWidth="222.0" text="Name" />
                         <TreeTableColumn prefWidth="85.0" text="Level" />
