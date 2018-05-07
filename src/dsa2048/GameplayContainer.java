@@ -3,53 +3,60 @@ package dsa2048;
 import java.util.Stack;
 
 public class GameplayContainer {
-	private static GameGrid gameTable = new GameGrid(4);
-	private static Stack<GameGrid> historyTable = new Stack<GameGrid>();
-	private static Integer currentScore = 0;
-	private static Integer bestScore;
-
-	public static GameGrid getGameTable() {
+	private GameGrid gameTable = new GameGrid(4);
+	private Stack<GameGrid> historyTable = new Stack<GameGrid>();
+	private Stack<Integer> historyScore = new Stack<Integer>();
+	private Integer currentScore = 0;
+	private Integer bestScore;
+	
+	public GameplayContainer() {
+		
+	}
+	
+	public GameGrid getGameTable() {
 		return gameTable;
 	}
 
-	public static void initialize() {
-		if (bestScore == null)
+	public void initialize() {
+		if (bestScore == null) {
 			bestScore = 0;
+		}
 		gameTable = new GameGrid(4);
 		gameTable.generateNumber();
 		gameTable.generateNumber();
 	}
 
-	public static void pushTable() {
+	public void pushTable() {
 		historyTable.push(gameTable.clone());
+		historyScore.push(currentScore);
 	}
 
-	public static void popTable() {
-		historyTable.pop();
-	}
-
-	public static void restart() {
+	public void restart() {
 		initialize();
 		historyTable.clear();
 		currentScore = 0;
 	}
 
-	public static void undo() {
+	public void undo() {
 		if (!historyTable.isEmpty()) {
-			gameTable = historyTable.peek();
-			historyTable.pop();
+			gameTable = historyTable.pop();
+			currentScore = historyScore.pop();
 		}
 	}
 
-	public static void updateScore() {
+	public void updateScore() {
 		currentScore = gameTable.getScore();
 		if (currentScore > bestScore) {
 			bestScore = currentScore;
 		}
 	}
 
-	public static Integer getScore() {
+	public Integer getScore() {
 		return currentScore;
 	}
 
+	public Integer getBestScore() {
+		return bestScore;
+	}
+	
 }

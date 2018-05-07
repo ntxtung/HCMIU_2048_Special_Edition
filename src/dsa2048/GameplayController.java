@@ -18,7 +18,7 @@ public class GameplayController {
 		public TitleList() {
 			for (int i = 0; i < paneGame.getRowCount(); i++) {
 				for (int j = 0; j < paneGame.getColumnCount(); j++) {
-					listOfTitles[i][j] = new TitleFX(GameplayContainer.getGameTable().get(i, j));
+					listOfTitles[i][j] = new TitleFX(gameContainer.getGameTable().get(i, j));
 				}
 			}
 		}
@@ -30,7 +30,7 @@ public class GameplayController {
 		public void update() {
 			for (int i = 0; i < paneGame.getRowCount(); i++) {
 				for (int j = 0; j < paneGame.getColumnCount(); j++) {
-					listOfTitles[i][j].setValue(GameplayContainer.getGameTable().get(i, j));
+					listOfTitles[i][j].setValue(gameContainer.getGameTable().get(i, j));
 				}
 			}
 		}
@@ -60,10 +60,12 @@ public class GameplayController {
 	private Button btnRestart;
 
 	private TitleList tiList;
+	private GameplayContainer gameContainer;
 
 	@FXML
 	public void initialize() {
-		GameplayContainer.initialize();
+		gameContainer = new GameplayContainer();
+		gameContainer.initialize();
 		tiList = new TitleList();
 		textScoreBest = new Text();
 		textScoreCurrent = new Text();
@@ -79,27 +81,27 @@ public class GameplayController {
 				paneGame.add(tiList.get(i, j).getTitle(), j, i);
 			}
 		}
-		scoreCurrent.setText(GameplayContainer.getScore().toString());
-		scoreBest.setText(GameplayContainer.getScore().toString());
+		scoreCurrent.setText(gameContainer.getScore().toString());
+		scoreBest.setText(gameContainer.getBestScore().toString());
 	}
 
 	@FXML
 	public void onKeyboardPressed(KeyEvent e) {
-		GameplayContainer.pushTable();
+		gameContainer.pushTable();
 		if (e.getCode() == KeyCode.W) {
-			GameplayContainer.getGameTable().move(MoveType.UP);
+			gameContainer.getGameTable().move(MoveType.UP);
 		} else if (e.getCode() == KeyCode.A) {
-			GameplayContainer.getGameTable().move(MoveType.LEFT);
+			gameContainer.getGameTable().move(MoveType.LEFT);
 		} else if (e.getCode() == KeyCode.S) {
-			GameplayContainer.getGameTable().move(MoveType.DOWN);
+			gameContainer.getGameTable().move(MoveType.DOWN);
 		} else if (e.getCode() == KeyCode.D) {
-			GameplayContainer.getGameTable().move(MoveType.RIGHT);
+			gameContainer.getGameTable().move(MoveType.RIGHT);
 		}
 
-//		GameplayContainer.getGameTable().consoleDisplay();
-		GameplayContainer.updateScore();
+//		gameContainer.getGameTable().consoleDisplay();
+		gameContainer.updateScore();
 		this.render();
-		if (GameplayContainer.getGameTable().isOver()) {
+		if (gameContainer.getGameTable().isOver()) {
 			Alert al = new Alert(AlertType.INFORMATION);
 			al.setTitle("2048 - GameOver");
 			al.setContentText("GAME OVER!");
@@ -110,15 +112,15 @@ public class GameplayController {
 	
 	@FXML
 	public void onRestartButtonClicked() {
-		GameplayContainer.restart();
+		gameContainer.restart();
 		this.render();
 	}
 	
 	@FXML
 	public void onUndoButtonClicked() {
-		GameplayContainer.undo();
+		gameContainer.undo();
 
-//		GameplayContainer.getGameTable().consoleDisplay();
+//		gameContainer.getGameTable().consoleDisplay();
 		this.render();
 	}
 
