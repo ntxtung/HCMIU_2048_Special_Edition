@@ -23,6 +23,7 @@ public class PlayerContainer implements IMsgProcessable {
 		if (subStr[0].equals("login")) {
 			String username = subStr[1];
 			String password = subStr[2];
+			
 			Player player = Login.getInstance().getPlayerInfo(subStr[1], subStr[2]);
 			if (player != null) {
 				playerThread.feedback(String.format("%d@@%s@@%d", player.getId(), player.getName(), player.getLevel()));
@@ -30,7 +31,6 @@ public class PlayerContainer implements IMsgProcessable {
 			} else
 				playerThread.sendInfoMsg("INVALID LOGIN!");
 		}
-	
 		
 	}
 	

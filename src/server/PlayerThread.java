@@ -48,16 +48,16 @@ public class PlayerThread extends Thread {
 			String msg = "";
 			while (true) {
 				msg = is.readLine();
-				System.out.println(">>" + msg);
+				//System.out.println(">>" + msg);
 				
-				os.write(">>" + msg);
+				//os.write(">>" + msg);
 				os.newLine();
 				
 				os.flush();
 				
 				String[] subStr = null;
 				subStr = msg.split("@@");
-				System.out.println(Arrays.toString(subStr));
+				System.out.println(">> [Client "+clientNumber+"]"+Arrays.toString(subStr));
 				
 				/// PROCESSING MESSAGE
 				
@@ -87,6 +87,18 @@ public class PlayerThread extends Thread {
 					feedback(msg);
 				}
 				
+				if (subStr[0].equals("gen")) {
+					feedback(msg);
+				}
+				
+				if (subStr[0].equals("undo")) {
+					feedback(msg);
+				}
+				
+				if (subStr[0].equals("lose")) {
+					System.out.println("Client "+clientNumber + " lost!!!");
+				}
+				
 				////////////////////////////////
 						
 				
@@ -98,7 +110,7 @@ public class PlayerThread extends Thread {
 				
 			}
 		} catch (IOException e) {
-			System.out.println("The player had disconnected!");
+			System.out.println("The player " + this + " had disconnected!");
 		}
 	}
 	
