@@ -13,6 +13,12 @@ public class PlayerContainer implements IMsgProcessable {
 			instance = new PlayerContainer();
 		return instance;
 	}
+
+	@Override
+	public void onReceivedMsgFromClient(PlayerThread playerThread, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

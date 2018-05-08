@@ -18,7 +18,9 @@ public class ClientSocket {
 	private static BufferedWriter os = null;
 	private static BufferedReader is = null;
 	
-	public static void main(String[] args) {
+	private static ClientCallbacker clientCallbacker;
+	
+//	public static void main(String[] args) {
 //		connect();
 //		String msg = "";
 //		Scanner sc = new Scanner(System.in);
@@ -26,6 +28,10 @@ public class ClientSocket {
 //			msg = sc.nextLine();
 //			sendMsg(msg);
 //		}
+//	}
+	
+	public static void setClientCallbacker(ClientCallbacker clientCallbacker) {
+		instance.clientCallbacker = clientCallbacker;
 	}
 	
 	private ClientSocket() {
@@ -63,6 +69,7 @@ public class ClientSocket {
 					
 						msg = is.readLine();
 						System.out.println(msg);
+						
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
