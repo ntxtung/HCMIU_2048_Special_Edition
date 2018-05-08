@@ -2,6 +2,8 @@ package server;
 
 import java.util.ArrayList;
 
+import game.Player;
+
 public class PlayerContainer implements IMsgProcessable {
 	
 	private static ArrayList<PlayerThread> players = new ArrayList<>();
@@ -16,7 +18,19 @@ public class PlayerContainer implements IMsgProcessable {
 
 	@Override
 	public void onReceivedMsgFromClient(PlayerThread playerThread, String msg) {
-		// TODO Auto-generated method stub
+		String[] subStr = msg.split("@@");
+		
+		if (subStr[0].equals("login")) {
+			String username = subStr[1];
+			String password = subStr[2];
+			Player player = Login.getInstance().getPlayerInfo(subStr[1], subStr[2]);
+			if (player != null) {
+				playerThread.feedback(String.format("%d@@%s@@%d", player.getId(), player.getName(), player.getLevel()));
+				playerThread.setPlayer(player);
+			} else
+				playerThread.sendInfoMsg("INVALID LOGIN!");
+		}
+	
 		
 	}
 	

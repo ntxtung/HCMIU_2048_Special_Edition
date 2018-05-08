@@ -85,7 +85,7 @@ public class Login {
 			try {
 				int playerId 	  = resultSet.getInt	(1);
 				String playerName = resultSet.getString (2);
-				int level 		  = resultSet.getInt	(3);
+				int level 		  = resultSet.getInt	(4);
 				Player player = new Player(playerId, playerName, level);
 				return player;
 			} catch (SQLException e) {

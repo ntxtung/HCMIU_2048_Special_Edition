@@ -7,6 +7,7 @@ public class Room implements IMsgProcessable {
 	private Integer roomId;
 	private String 	roomName;
 	private Integer maxPlayer;
+	//private Integer currentPlayers = 0;
 	
 	private ArrayList<PlayerThread> players = new ArrayList<>();
 	
@@ -14,6 +15,12 @@ public class Room implements IMsgProcessable {
 		this.roomId = roomId;
 		this.roomName = roomName;
 		this.maxPlayer = maxPlayer;
+	}
+	
+	public Room(String roomId, String roomName, String maxPlayer) {
+		this.roomId = Integer.parseInt(roomName);
+		this.roomName = roomName;
+		this.maxPlayer = Integer.parseInt(maxPlayer);
 	}
 	
 	public void startGame() {
@@ -25,7 +32,20 @@ public class Room implements IMsgProcessable {
 	
 	@Override
 	public void onReceivedMsgFromClient(PlayerThread playerThread, String msg) {
-		// TODO Auto-generated method stub
+		String[] subStr = msg.split("@@");
+		
+		if (subStr[0].equals("wannajoin")) {
+			if (players.size() < maxPlayer) {
+				players.add(playerThread);
+				playerThread.feedback("acceptjoinroom");
+			}
+		}
+		
+		if (subStr[0].equals("control")) {
+			for (PlayerThread player : players) {
+				player.feedback(String.format("control@@%s@@%s", subStr[1]));
+			}
+		}
 		
 	}
 	

@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import game.Player;
+import javafx.application.Platform;
 
 public class PlayerThread extends Thread {
 	
@@ -34,6 +35,10 @@ public class PlayerThread extends Thread {
 		return clientNumber;
 	}
 	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
 	@Override
 	public void run() {
 		try {
@@ -57,55 +62,73 @@ public class PlayerThread extends Thread {
 				/// PROCESSING MESSAGE
 				
 				if (subStr[0].equals("login"))
-					if (Login.getInstance().isLoginValid(subStr[1], subStr[2]) == true) { //login successfully
-						feedback("LOGIN SUCCESSFULLY");
-					} else
-						sendInfoMsg("INVALID LOGIN!");
-					//System.out.println("Try to log in!");
+				{		
+					PlayerContainer.getInstance().onReceivedMsgFromClient(this, msg);
+				}
+					
 				
 				if (subStr[0].equals("wannajoin")) {	//wannajoin@@[ROOM ID]
 					int roomId = Integer.parseInt(subStr[1]);
 					Room roomWannaJoin = RoomContainer.getInstance().findRoom(roomId);
 					if (roomWannaJoin != null) {
-						roomWannaJoin.onReceivedMsgFromClient(this, msg);
+						roomWannaJoin.onReceivedMsgFromClient(this, "wannajoin");
 					} else {
 						sendInfoMsg("The room is no longer available!");
 					}
-					//feedback(String.format("acceptjoin@@%s", roomId));
+					//feedback(String.format("acceptjoin@@%s", roomId));	
 					
 				}
 				
+				if (subStr[0].equals("getroomlist")) {
+					feedback(RoomContainer.getInstance().getRoomList());
+				}
+				
+				if (subStr[0].equals("control")) {
+					feedback(msg);
+				}
+				
 				////////////////////////////////
+						
 				
 				if (msg.equals("QUIT")) {
 					feedback(">> OK closing");
                     System.exit(0);
                     break;
 				}
+				
 			}
 		} catch (IOException e) {
-			System.out.println(e);
-			e.printStackTrace();
-			System.out.println("Perhap the player had disconnected!");
+			System.out.println("The player had disconnected!");
 		}
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	public boolean feedback(String feedbackStr) {
 		try {
-			if (os != null) {
+			//if (os != null) {
+//				os.write(feedbackStr);
+//				os.newLine();
+//				os.flush();
+//				return true;
+				
 				os.write(feedbackStr);
 				os.newLine();
+				
 				os.flush();
+				
 				return true;
-			}
+			//}
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
+		//return true;
 	}
 	
-	private boolean sendInfoMsg(String infoMsg) {
+	public boolean sendInfoMsg(String infoMsg) {
 		return feedback("msg@@" + infoMsg);
 	}
 } 
