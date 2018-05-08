@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.LoginController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.LoginController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -39,7 +39,7 @@
                         <Font name="Roboto Light" size="14.0" />
                      </font>
                   </JFXPasswordField>
-                  <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="154.0" layoutY="258.0" onAction="#login" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: #2d378e;" text="Login" textFill="WHITE" AnchorPane.bottomAnchor="111.6" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="154.0" layoutY="258.0" onAction="#onLogin" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: #2d378e;" text="Login" textFill="WHITE" AnchorPane.bottomAnchor="111.6" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
                      <font>
                         <Font name="Roboto Bold" size="14.0" />
                      </font>

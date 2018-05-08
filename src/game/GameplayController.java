@@ -1,5 +1,8 @@
 package game;
 
+import java.util.Stack;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,15 +13,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class GameplayController {
-
+public class GameplayController implements ClientCallbacker {
 	class TitleList {
 		private TitleFX[][] listOfTitles = new TitleFX[4][4];
 
 		public TitleList() {
 			for (int i = 0; i < paneGame.getRowCount(); i++) {
 				for (int j = 0; j < paneGame.getColumnCount(); j++) {
-					listOfTitles[i][j] = new TitleFX(gameContainer.getGameTable().get(i, j));
+					listOfTitles[i][j] = new TitleFX(gameTable.get(i, j));
 				}
 			}
 		}
@@ -30,9 +32,44 @@ public class GameplayController {
 		public void update() {
 			for (int i = 0; i < paneGame.getRowCount(); i++) {
 				for (int j = 0; j < paneGame.getColumnCount(); j++) {
-					listOfTitles[i][j].setValue(gameContainer.getGameTable().get(i, j));
+					listOfTitles[i][j].setValue(gameTable.get(i, j));
 				}
 			}
+		}
+	}
+
+	private GameGrid gameTable = new GameGrid(4);
+	private Stack<GameGrid> historyTable = new Stack<GameGrid>();
+	private Stack<Integer> historyScore = new Stack<Integer>();
+	private Integer currentScore = 0;
+	private Integer bestScore;
+
+	private void gameGridInit() {
+		if (bestScore == null) {
+			bestScore = 0;
+		}
+		gameTable = new GameGrid(4);
+		gameTable.generateNumber();
+		gameTable.generateNumber();
+	}
+
+	private void gameGridUndo() {
+		if (!historyTable.isEmpty()) {
+			gameTable = historyTable.pop();
+			currentScore = historyScore.pop();
+		}
+	}
+
+	private void gameGridRestart() {
+		gameGridInit();
+		historyTable.clear();
+		currentScore = 0;
+	}
+
+	public void updateScore() {
+		currentScore = gameTable.getScore();
+		if (currentScore > bestScore) {
+			bestScore = currentScore;
 		}
 	}
 
@@ -60,12 +97,11 @@ public class GameplayController {
 	private Button btnRestart;
 
 	private TitleList tiList;
-	private GameplayContainer gameContainer;
 
 	@FXML
 	public void initialize() {
-		gameContainer = new GameplayContainer();
-		gameContainer.initialize();
+		gameGridInit();
+
 		tiList = new TitleList();
 		textScoreBest = new Text();
 		textScoreCurrent = new Text();
@@ -75,53 +111,78 @@ public class GameplayController {
 	public void render() {
 		tiList.update();
 		paneGame.getChildren().clear();
-		Pane pn = new Pane();
 		for (int i = 0; i < paneGame.getRowCount(); i++) {
 			for (int j = 0; j < paneGame.getColumnCount(); j++) {
 				paneGame.add(tiList.get(i, j).getTitle(), j, i);
 			}
 		}
-		scoreCurrent.setText(gameContainer.getScore().toString());
-		scoreBest.setText(gameContainer.getBestScore().toString());
+		scoreCurrent.setText(gameTable.getScore().toString());
+		// scoreBest.setText(gameContainer.getBestScore().toString());
 	}
 
 	@FXML
 	public void onKeyboardPressed(KeyEvent e) {
-		gameContainer.pushTable();
+		System.out.println("Event key");
+		historyTable.push(gameTable.clone());
+		historyScore.push(currentScore);
 		if (e.getCode() == KeyCode.W) {
-			gameContainer.getGameTable().move(MoveType.UP);
+			// gameContainer.getGameTable().move(MoveType.UP);
+			ClientSocket.getInstance().sendMsg("control@@W");
 		} else if (e.getCode() == KeyCode.A) {
-			gameContainer.getGameTable().move(MoveType.LEFT);
+			// gameContainer.getGameTable().move(MoveType.LEFT);
+			ClientSocket.getInstance().sendMsg("control@@A");
 		} else if (e.getCode() == KeyCode.S) {
-			gameContainer.getGameTable().move(MoveType.DOWN);
+			// gameContainer.getGameTable().move(MoveType.DOWN);
+			ClientSocket.getInstance().sendMsg("control@@S");
 		} else if (e.getCode() == KeyCode.D) {
-			gameContainer.getGameTable().move(MoveType.RIGHT);
+			// gameContainer.getGameTable().move(MoveType.RIGHT);
+			ClientSocket.getInstance().sendMsg("control@@D");
 		}
 
-//		gameContainer.getGameTable().consoleDisplay();
-		gameContainer.updateScore();
-		this.render();
-		if (gameContainer.getGameTable().isOver()) {
+		// gameContainer.getGameTable().consoleDisplay();
+		// gameContainer.updateScore();
+		// this.render();
+		if (gameTable.isOver()) {
 			Alert al = new Alert(AlertType.INFORMATION);
 			al.setTitle("2048 - GameOver");
 			al.setContentText("GAME OVER!");
 			al.show();
 		}
-//		System.out.println();
 	}
-	
+
 	@FXML
 	public void onRestartButtonClicked() {
-		gameContainer.restart();
+		gameGridRestart();
 		this.render();
 	}
-	
+
 	@FXML
 	public void onUndoButtonClicked() {
-		gameContainer.undo();
+		gameGridUndo();
 
-//		gameContainer.getGameTable().consoleDisplay();
+		// gameContainer.getGameTable().consoleDisplay();
 		this.render();
+	}
+
+	@Override
+	public void onReceivedMsgFromServer(String msg) {
+		if (msg.equals("control@@W")) {
+			gameTable.move(MoveType.UP);
+		} else if (msg.equals("control@@A")) {
+			gameTable.move(MoveType.LEFT);
+		} else if (msg.equals("control@@S")) {
+			gameTable.move(MoveType.DOWN);
+		} else if (msg.equals("control@@D")) {
+			gameTable.move(MoveType.RIGHT);
+		}
+//		gameTable.consoleDisplay();
+//		System.out.println("test " +msg);
+		Platform.setImplicitExit(false);
+		Platform.runLater(() -> {
+			updateScore();
+			render();
+		});
+		
 	}
 
 }
