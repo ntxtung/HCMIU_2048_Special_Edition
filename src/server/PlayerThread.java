@@ -51,8 +51,7 @@ public class PlayerThread extends Thread {
 				//System.out.println(">>" + msg);
 				
 				//os.write(">>" + msg);
-				os.newLine();
-				
+				os.newLine();	
 				os.flush();
 				
 				String[] subStr = null;
@@ -67,7 +66,7 @@ public class PlayerThread extends Thread {
 				}
 					
 				
-				if (subStr[0].equals("wannajoin")) {	//wannajoin@@[ROOM ID]
+				if (subStr[0].equals("wannajoin")) {	
 					int roomId = Integer.parseInt(subStr[1]);
 					Room roomWannaJoin = RoomContainer.getInstance().findRoom(roomId);
 					if (roomWannaJoin != null) {
@@ -75,8 +74,7 @@ public class PlayerThread extends Thread {
 					} else {
 						sendInfoMsg("The room is no longer available!");
 					}
-					//feedback(String.format("acceptjoin@@%s", roomId));	
-					
+				
 				}
 				
 				if (subStr[0].equals("getroomlist")) {
@@ -99,8 +97,7 @@ public class PlayerThread extends Thread {
 					System.out.println("Client "+clientNumber + " lost!!!");
 				}
 				
-				////////////////////////////////
-						
+				////////////////////////////////					
 				
 				if (msg.equals("QUIT")) {
 					feedback(">> OK closing");
