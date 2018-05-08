@@ -17,6 +17,11 @@ public class ServerProgram {
 		
 		int clientNumber = 0;
 		
+//		System.out.println(Cryptography.encrypt("2048"));
+//		System.out.println(Cryptography.decrypt("‰‘…»XÔ±f“_≥∫÷f"));
+		
+		Login.getInstance();
+		
 		try {
 			listener = new ServerSocket(port);
 		} catch (IOException e) {

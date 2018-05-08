@@ -1,10 +1,10 @@
-package dsa2048;
+package game;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 
 public class LoginController {
 
@@ -17,7 +17,10 @@ public class LoginController {
 	@FXML
 	void onLogin(ActionEvent event) {
 		Alert al = new Alert(AlertType.INFORMATION);
-		al.setContentText("LOGGING IN");
+		al.setContentText(ClientSocket.getInstance().
+				sendMsg(String.format("login@@%s@@%s", txtUsername.getText(), txtPassword.getText())));
 		al.show();
+		
+		//System.out.println();
 	}
 }

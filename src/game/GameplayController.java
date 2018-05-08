@@ -1,4 +1,4 @@
-package dsa2048;
+package game;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

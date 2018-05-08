@@ -1,4 +1,4 @@
-package dsa2048;
+package game;
 
 public enum MoveType {
 	UP, DOWN, LEFT, RIGHT;
