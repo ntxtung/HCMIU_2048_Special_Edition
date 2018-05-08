@@ -36,4 +36,24 @@ public class RoomContainer {
 		}
 		return null;
 	}
+
+	public static String getRoomList() {
+		String roomList = "";
+		for (Room room : rooms) {
+			roomList += room.getRoomId() + "@@" + room.getRoomName() + "@@" + room.getMaxPlayer() + "@@";
+		}
+		return roomList;
+	}
+	
+	public static Room wannajoin(PlayerThread playerThread, int roomId) {
+		Room roomWannaJoin = instance.findRoom(roomId);
+		if (roomWannaJoin != null) {
+			roomWannaJoin.onReceivedMsgFromClient(playerThread, "wannajoin");
+		} else {
+			playerThread.sendInfoMsg("The room is no longer available!");
+		}
+		return roomWannaJoin;
+		//feedback(String.format("acceptjoin@@%s", roomId));	
+	}
+	
 }

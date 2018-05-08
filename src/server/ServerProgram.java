@@ -21,7 +21,15 @@ public class ServerProgram {
 //		System.out.println(Cryptography.decrypt("‰‘…»XÔ±f“_≥∫÷f"));
 		
 		Login.getInstance();
+		RoomContainer.getInstance();
+		PlayerContainer.getInstance();
 		
+		RoomContainer.getInstance().createNewRoom("aaaaaa", 2);
+		RoomContainer.getInstance().createNewRoom("dsfssdf", 3);
+		RoomContainer.getInstance().createNewRoom("asdwe", 4);
+		RoomContainer.getInstance().createNewRoom("asdcx", 6);
+		RoomContainer.getInstance().createNewRoom("qwe", 8);
+			
 		try {
 			listener = new ServerSocket(port);
 		} catch (IOException e) {

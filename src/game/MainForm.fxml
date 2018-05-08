@@ -22,6 +22,7 @@
                           <buttons>
                               <JFXButton onAction="#onJoinRoom" text="JOIN ROOM" />
                               <JFXButton onAction="#onCreateRoom" text="CREATE ROOM" />
+                              <JFXButton onAction="#onGetRoomList" text="Refresh" />
                           </buttons>
                         </ButtonBar>
                      </bottom>

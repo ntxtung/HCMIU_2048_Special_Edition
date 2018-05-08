@@ -18,7 +18,7 @@ public class LoginController {
 	void onLogin(ActionEvent event) {
 		Alert al = new Alert(AlertType.INFORMATION);
 		al.setContentText(ClientSocket.getInstance().
-				sendMsg(String.format("login@@%s@@%s", txtUsername.getText(), txtPassword.getText())));
+				sendMsgAndReceive(String.format("login@@%s@@%s", txtUsername.getText(), txtPassword.getText())));
 		al.show();
 		
 		//System.out.println();

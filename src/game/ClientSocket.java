@@ -79,7 +79,22 @@ public class ClientSocket {
 		inputMsg.start();
 	}
 	
-	public static String sendMsg(String msg) {
+	public static boolean sendMsg(String msg) {
+		try {
+			if (socket.isConnected()) {
+				os.write(msg);
+				os.newLine();
+				os.flush();
+				return true;
+			} else
+				return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static String sendMsgAndReceive(String msg) {
 		try {
 			if (socket.isConnected()) {
 				os.write(msg);
@@ -93,5 +108,4 @@ public class ClientSocket {
 			return null;
 		}
 	}
-	
 }

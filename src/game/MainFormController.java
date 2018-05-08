@@ -8,13 +8,13 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
@@ -27,8 +27,8 @@ public class MainFormController implements Initializable {
 	private ObservableList<Player> playersList;
 	
 	final ObservableList<Room> data = FXCollections.observableArrayList(
-		    new Room(1, "Room 1", 4),
-		    new Room(2, "Room 2", 2)
+		    //new Room(1, "Room 1", 4),
+		    //new Room(2, "Room 2", 2)
 		);
 	
 	@FXML
@@ -62,7 +62,22 @@ public class MainFormController implements Initializable {
     	}
     }
     
-    
+    @FXML
+    void onGetRoomList(ActionEvent event) {
+    	String roomList = ClientSocket.getInstance().sendMsgAndReceive("getroomlist");
+    	String[] roomListStr = roomList.split("@@");
+    	int roomCount = roomListStr.length / 3;
+    	
+    	Platform.runLater(()-> {
+    		roomsList.clear();
+    		//System.out.println(roomCount);
+    		for (int i = 0; i < roomListStr.length; i+=3) {
+    			//Integer.parseInt(roomListStr[i]);
+        		roomsList.add(new Room(Integer.parseInt(roomListStr[i]), roomListStr[i+1], Integer.parseInt(roomListStr[i+2])));
+        	}
+    	}); 
+    	
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
