@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.LoginController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Pane prefHeight="224.0" prefWidth="850.0" style="-fx-background-color: #2d378e;" />
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="377.0" prefWidth="850.0" />
+         </children>
+      </VBox>
+      <AnchorPane prefHeight="600.0" prefWidth="808.0">
+         <children>
+            <AnchorPane layoutX="226.0" layoutY="122.0" prefHeight="407.0" prefWidth="399.0" style="-fx-background-color: rgb(255, 255, 255); -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5); -fx-background-radius: 3;" AnchorPane.bottomAnchor="70.80000000000001" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="225.2" AnchorPane.topAnchor="122.0">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="160.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="159.2" AnchorPane.topAnchor="21.0">
+                     <image>
+                        <Image url="@../logo/hcmiu_logo.png" />
+                     </image>
+                  </ImageView>
+                  <JFXTextField fx:id="txtUsername" labelFloat="true" layoutX="54.0" layoutY="134.0" maxWidth="297.0" minWidth="226.0" prefHeight="31.0" prefWidth="297.0" promptText="Username" AnchorPane.bottomAnchor="242.0">
+                     <font>
+                        <Font name="Roboto Light" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="54.0" layoutY="199.0" maxWidth="297.0" minWidth="297.0" prefHeight="31.0" prefWidth="297.0" promptText="Password">
+                     <font>
+                        <Font name="Roboto Light" size="14.0" />
+                     </font>
+                  </JFXPasswordField>
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="154.0" layoutY="258.0" onAction="#onLogin" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: #2d378e;" text="Login" textFill="WHITE" AnchorPane.bottomAnchor="111.6" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fx:id="imgProgress" fitHeight="64.0" fitWidth="64.0" layoutX="168.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/Preloader_9.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Label layoutX="270.0" layoutY="42.0" text="COLLEGE MANAGEMENT SYSTEM" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
