@@ -39,26 +39,28 @@ public class GameGrid {
 	 * 
 	 */
 	public void move(MoveType mt) {
+		boolean state = true;
 		switch (mt) {
 		case UP:
-			pushUp();
+			state = pushUp();
 			break;
 		case DOWN:
-			pushDown();
+			state = pushDown();
 			break;
 		case LEFT:
-			pushLeft();
+			state = pushLeft();
 			break;
 		case RIGHT:
-			pushRight();
+			state = pushRight();
 			break;
 		}
-		if (numEmptyCell() > 0) {
+		if (numEmptyCell() > 0 && state == true) {
 			generateNumber();
 		}
 	}
 
-	private void pushUp() {
+	private boolean pushUp() {
+		boolean a = false;
 		for (int col = 0; col < size; col++) {
 			ArrayList<Integer> list = new ArrayList<>();
 			for (int row = 0; row < size; row++) {
@@ -66,8 +68,13 @@ public class GameGrid {
 			}
 			// eliminate zero
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).equals(0))
+				if (i + 1 < list.size())
+					if (list.get(i).equals(0) && !list.get(i + 1).equals(0)) {
+						a = true;
+					}
+				if (list.get(i).equals(0)) {
 					list.remove(i--);
+				}
 			}
 			// push
 			int i = 0;
@@ -76,6 +83,7 @@ public class GameGrid {
 					list.set(i, list.get(i) * 2);
 					score += list.get(i);
 					list.remove(i + 1);
+					a = true;
 				}
 				i++;
 			}
@@ -87,9 +95,11 @@ public class GameGrid {
 				}
 			}
 		}
+		return a;
 	}
 
-	private void pushDown() {
+	private boolean pushDown() {
+		boolean a = false;
 		for (int col = 0; col < size; col++) {
 			ArrayList<Integer> list = new ArrayList<>();
 			for (int row = 0; row < size; row++) {
@@ -97,6 +107,10 @@ public class GameGrid {
 			}
 			// eliminate zero
 			for (int i = 0; i < list.size(); i++) {
+				if (i + 1 < list.size())
+					if (list.get(i).equals(0) && !list.get(i + 1).equals(0)) {
+						a = true;
+					}
 				if (list.get(i).equals(0))
 					list.remove(i--);
 			}
@@ -107,6 +121,7 @@ public class GameGrid {
 					list.set(i, list.get(i) * 2);
 					score += list.get(i);
 					list.remove(i + 1);
+					a = true;
 				}
 				i++;
 			}
@@ -121,9 +136,11 @@ public class GameGrid {
 				}
 			}
 		}
+		return a;
 	}
 
-	private void pushLeft() {
+	private boolean pushLeft() {
+		boolean a = false;
 		for (int row = 0; row < size; row++) {
 			ArrayList<Integer> list = new ArrayList<>();
 			for (int col = 0; col < size; col++) {
@@ -131,6 +148,10 @@ public class GameGrid {
 			}
 			// eliminate zero
 			for (int i = 0; i < list.size(); i++) {
+				if (i + 1 < list.size())
+					if (list.get(i).equals(0) && !list.get(i + 1).equals(0)) {
+						a = true;
+					}
 				if (list.get(i).equals(0))
 					list.remove(i--);
 			}
@@ -141,6 +162,7 @@ public class GameGrid {
 					list.set(i, list.get(i) * 2);
 					score += list.get(i);
 					list.remove(i + 1);
+					a = true;
 				}
 				i++;
 			}
@@ -152,9 +174,11 @@ public class GameGrid {
 				}
 			}
 		}
+		return a;
 	}
 
-	private void pushRight() {
+	private boolean pushRight() {
+		boolean a = false;
 		for (int row = 0; row < size; row++) {
 			ArrayList<Integer> list = new ArrayList<>();
 			for (int col = 0; col < size; col++) {
@@ -162,6 +186,10 @@ public class GameGrid {
 			}
 			// eliminate zero
 			for (int i = 0; i < list.size(); i++) {
+				if (i + 1 < list.size())
+					if (list.get(i).equals(0) && !list.get(i + 1).equals(0)) {
+						a = true;
+					}
 				if (list.get(i).equals(0))
 					list.remove(i--);
 			}
@@ -172,6 +200,7 @@ public class GameGrid {
 					list.set(i, list.get(i) * 2);
 					score += list.get(i);
 					list.remove(i + 1);
+					a = true;
 				}
 				i++;
 			}
@@ -186,6 +215,7 @@ public class GameGrid {
 				}
 			}
 		}
+		return a;
 	}
 
 	/**
@@ -211,7 +241,12 @@ public class GameGrid {
 		}
 		int X = emptyspacesX.get(choice);
 		int Y = emptyspacesY.get(choice);
-		table[X][Y] = newPopup;
+
+		ClientSocket.getInstance().sendMsg("gen@@" + X + "@@" + Y + "@@" + newPopup);
+	}
+
+	public void insert(int X, int Y, int value) {
+		this.table[X][Y] = value;
 	}
 
 	public Integer get(int row, int col) {

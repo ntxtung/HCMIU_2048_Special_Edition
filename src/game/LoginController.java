@@ -25,12 +25,15 @@ public class LoginController {
 	@FXML
 	void onLogin(ActionEvent event) {
 		Alert al = new Alert(AlertType.INFORMATION);
-		String receive = ClientSocket.getInstance()
-				.sendMsgAndReceive(String.format("login@@%s@@%s", txtUsername.getText(), txtPassword.getText()));
-		if (receive != "msg@@InvalidLogin") {
+		System.out.println(txtUsername.getText());
+		System.out.println(txtPassword.getText());
+		String receive = ClientSocket.getInstance().sendMsgAndReceive(String.format("login@@%s@@%s", txtUsername.getText(), txtPassword.getText()));
+		System.out.println(receive);
+		if ( ! receive.equals("msg@@INVALID LOGIN!") ) {
+			ClientSocket.getInstance().setPlayerName(receive.split("@@")[1]);
 			completeLogin();
 		} else {
-			al.setContentText(receive);
+			al.setContentText("INVALID LOGIN!");
 			al.show();
 		}
 
@@ -45,6 +48,7 @@ public class LoginController {
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			Main.changeScene(scene);
+			
 			ClientSocket.setClientCallbacker(loader.getController());
 			
 			Stage dashboardStage2 = new Stage();

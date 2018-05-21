@@ -48,19 +48,6 @@ public class MultiplayerController implements ClientCallbacker {
 		gameTable.generateNumber();
 	}
 
-	private void gameGridUndo() {
-		if (!historyTable.isEmpty()) {
-			gameTable = historyTable.pop();
-			currentScore = historyScore.pop();
-		}
-	}
-
-	private void gameGridRestart() {
-		gameGridInit();
-		historyTable.clear();
-		currentScore = 0;
-	}
-
 	public void updateScore() {
 		currentScore = gameTable.getScore();
 		if (currentScore > bestScore) {

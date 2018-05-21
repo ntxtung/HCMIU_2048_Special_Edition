@@ -103,6 +103,11 @@
                   <Font name="Source Sans Pro Black" size="21.0" />
                </font>
             </Button>
+            <Text fx:id="txtPlayerName" fill="#786e65" layoutX="15.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="player" wrappingWidth="280.14373779296875">
+               <font>
+                  <Font name="Clear Sans Bold" size="30.0" />
+               </font>
+            </Text>
          </children>
          <opaqueInsets>
             <Insets />

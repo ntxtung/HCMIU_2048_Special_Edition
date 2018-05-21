@@ -95,13 +95,19 @@ public class GameplayController implements ClientCallbacker {
 	private Button btnUndo;
 	@FXML
 	private Button btnRestart;
+	@FXML
+	private Text txtPlayerName;
 
 	private TitleList tiList;
 
 	@FXML
 	public void initialize() {
 		gameGridInit();
-
+		
+		Platform.runLater(() -> {
+			txtPlayerName.setText(ClientSocket.getPlayerName());
+		});
+		
 		tiList = new TitleList();
 		textScoreBest = new Text();
 		textScoreCurrent = new Text();
@@ -126,23 +132,17 @@ public class GameplayController implements ClientCallbacker {
 		historyTable.push(gameTable.clone());
 		historyScore.push(currentScore);
 		if (e.getCode() == KeyCode.W) {
-			// gameContainer.getGameTable().move(MoveType.UP);
 			ClientSocket.getInstance().sendMsg("control@@W");
 		} else if (e.getCode() == KeyCode.A) {
-			// gameContainer.getGameTable().move(MoveType.LEFT);
 			ClientSocket.getInstance().sendMsg("control@@A");
 		} else if (e.getCode() == KeyCode.S) {
-			// gameContainer.getGameTable().move(MoveType.DOWN);
 			ClientSocket.getInstance().sendMsg("control@@S");
 		} else if (e.getCode() == KeyCode.D) {
-			// gameContainer.getGameTable().move(MoveType.RIGHT);
 			ClientSocket.getInstance().sendMsg("control@@D");
 		}
 
-		// gameContainer.getGameTable().consoleDisplay();
-		// gameContainer.updateScore();
-		// this.render();
 		if (gameTable.isOver()) {
+			ClientSocket.getInstance().sendMsg("lose");
 			Alert al = new Alert(AlertType.INFORMATION);
 			al.setTitle("2048 - GameOver");
 			al.setContentText("GAME OVER!");
@@ -153,30 +153,37 @@ public class GameplayController implements ClientCallbacker {
 	@FXML
 	public void onRestartButtonClicked() {
 		gameGridRestart();
-		this.render();
 	}
 
 	@FXML
 	public void onUndoButtonClicked() {
-		gameGridUndo();
-
-		// gameContainer.getGameTable().consoleDisplay();
-		this.render();
+		ClientSocket.getInstance().sendMsg("undo");
 	}
 
 	@Override
 	public void onReceivedMsgFromServer(String msg) {
-		if (msg.equals("control@@W")) {
-			gameTable.move(MoveType.UP);
-		} else if (msg.equals("control@@A")) {
-			gameTable.move(MoveType.LEFT);
-		} else if (msg.equals("control@@S")) {
-			gameTable.move(MoveType.DOWN);
-		} else if (msg.equals("control@@D")) {
-			gameTable.move(MoveType.RIGHT);
+		String[] subStr = msg.split("@@");
+		if (subStr[0].equals("control")) {
+			if (subStr[1].equals("W")) {
+				gameTable.move(MoveType.UP);
+			} else if (subStr[1].equals("A")) {
+				gameTable.move(MoveType.LEFT);
+			} else if (subStr[1].equals("S")) {
+				gameTable.move(MoveType.DOWN);
+			} else if (subStr[1].equals("D")) {
+				gameTable.move(MoveType.RIGHT);
+			} 
+		} else if (subStr[0].equals("gen")) {
+			int x, y, value;
+			x = Integer.parseInt(subStr[1]);
+			y = Integer.parseInt(subStr[2]);
+			value = Integer.parseInt(subStr[3]);
+			gameTable.insert(x, y, value);
+			System.out.println("Generate: " + x + " " + y + " " + value);
+		} else if (subStr[0].equals("undo")) {
+			gameGridUndo();
 		}
-//		gameTable.consoleDisplay();
-//		System.out.println("test " +msg);
+		
 		Platform.setImplicitExit(false);
 		Platform.runLater(() -> {
 			updateScore();

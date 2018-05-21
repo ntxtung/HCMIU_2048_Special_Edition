@@ -17,6 +17,16 @@ public class ClientSocket {
 	private static Socket socket = null;
 	private static BufferedWriter os = null;
 	private static BufferedReader is = null;
+	
+	private static String playerName;
+	
+	public static String getPlayerName() {
+		return playerName;
+	}
+
+	public static void setPlayerName(String playerName) {
+		ClientSocket.playerName = playerName;
+	}
 
 	private static ClientCallbacker clientCallbacker;
 
